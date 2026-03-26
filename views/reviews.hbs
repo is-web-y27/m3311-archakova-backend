@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  
+  <title>Обзоры — Mononews</title>
+  {{> head}}
+
+</head>
+
+<body>
+  {{> header}}
+
+  <main class="main">
+    <section id="reviews" class="section reviews">
+      <h2 class="section__title">Обзоры альбомов</h2>
+      <ol class="reviews__list">
+        <li>"Imago" — <em><del>старый звук</del></em>, <i>новое звучание</i></li>
+        <li>"КРАСНОСТЬ" — разговор артиста <ins>с самим собой</ins></li>
+      </ol>
+      <pre><code>
+// Пример кода для встраивания плейлиста
+const playlist = ['track1.mp3', 'track2.mp3'];
+playlist.forEach(track => play(track));
+      </code></pre>
+    </section>
+  </main>
+
+  {{> footer}}
+  {{> scripts}}
+</body>
+</html>
