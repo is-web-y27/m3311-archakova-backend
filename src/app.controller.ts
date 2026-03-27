@@ -2,7 +2,6 @@ import { Controller, Get, Query, Render } from '@nestjs/common';
 
 @Controller()
 export class AppController {
-
   @Get()
   @Render('index')
   index(@Query('user') user?: string) {
@@ -44,5 +43,4 @@ export class AppController {
   apiPosts(@Query('user') user?: string) {
     return { user };
   }
-
 }
