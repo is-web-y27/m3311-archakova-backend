@@ -2,7 +2,13 @@
   "name": "m3311-archakova-backend",
   "version": "0.0.1",
   "description": "",
-  "author": "",
+  "author": {
+    "name": "Arhcakova Milana",
+    "email": "408172@niuitmo.ru"
+  },
+  "engine": {
+    "node": ">=22"
+  },
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
@@ -21,10 +27,16 @@
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
+    "@nestjs/config": "^4.0.3",
     "@nestjs/core": "^11.0.1",
     "@nestjs/platform-express": "^11.0.1",
+    "@nestjs/typeorm": "^11.0.0",
+    "hbs": "^4.2.0",
+    "pg": "^8.20.0",
+    "pg-connection-string": "^2.12.0",
     "reflect-metadata": "^0.2.2",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "typeorm": "^0.3.28"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
@@ -33,6 +45,7 @@
     "@nestjs/schematics": "^11.0.0",
     "@nestjs/testing": "^11.0.1",
     "@types/express": "^5.0.0",
+    "@types/hbs": "^4.0.5",
     "@types/jest": "^30.0.0",
     "@types/node": "^22.10.7",
     "@types/supertest": "^6.0.2",

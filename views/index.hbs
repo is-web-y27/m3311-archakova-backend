@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <title>Музыкальные Новости — Mononews</title>
+  {{> head}}
+</head>
+<body>
+  {{> header}}
+
+  <main class="main">
+    <section id="news" class="section section--news">
+      <h2 class="section__title">Новости</h2>
+      <div class="news-grid">
+        <article class="article">
+          <h3 class="article__title">КУОК (QUOK) — "Imago"</h3>
+          <p><strong>Вышел долгожданный альбом "Imago"</strong> 12.09.2022</p>
+          <figure class="article__image">
+            <img src="https://i1.sndcdn.com/artworks-twYEFHzDuYev-0-t1080x1080.jpg" alt="Обложка альбома Imago"/>
+            <figcaption>Обложка альбома "Imago" от QUOK</figcaption>
+          </figure>
+          <blockquote class="quote">
+            <p>В твоём программном коде не было прописано таких строк<br />Робот не может причинять своим хозяевам боль</p>
+            <cite>— КУОК (QUOK)</cite>
+          </blockquote>
+        </article>
+
+        <article class="article">
+          <h3 class="article__title">Интервью</h3>
+          <details class="details">
+            <summary>Куок — об альбоме «Imago», песне в честь умершего друга и жизни русского в Чехии.</summary>
+            <p>Владимир Сорокин прошел долгий путь из череды метаморфоз...</p>
+          </details>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <div class="banner" role="complementary">Реклама: новые релизы каждую пятницу!</div>
+
+  {{> footer}}
+  {{> scripts}}
+</body>
+</html>
