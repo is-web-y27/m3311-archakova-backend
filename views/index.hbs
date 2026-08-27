@@ -1,43 +1,56 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-  <title>Музыкальные Новости — Mononews</title>
-  {{> head}}
-</head>
-<body>
-  {{> header}}
+{{#> layout title="Музыкальные Новости"}}
 
-  <main class="main">
-    <section id="news" class="section section--news">
-      <h2 class="section__title">Новости</h2>
-      <div class="news-grid">
-        <article class="article">
-          <h3 class="article__title">КУОК (QUOK) — "Imago"</h3>
-          <p><strong>Вышел долгожданный альбом "Imago"</strong> 12.09.2022</p>
-          <figure class="article__image">
-            <img src="https://i1.sndcdn.com/artworks-twYEFHzDuYev-0-t1080x1080.jpg" alt="Обложка альбома Imago"/>
-            <figcaption>Обложка альбома "Imago" от QUOK</figcaption>
-          </figure>
-          <blockquote class="quote">
-            <p>В твоём программном коде не было прописано таких строк<br />Робот не может причинять своим хозяевам боль</p>
-            <cite>— КУОК (QUOK)</cite>
-          </blockquote>
-        </article>
+<section id="news" class="section section--news">
+  <h2 class="section__title">Новости</h2>
 
-        <article class="article">
-          <h3 class="article__title">Интервью</h3>
-          <details class="details">
-            <summary>Куок — об альбоме «Imago», песне в честь умершего друга и жизни русского в Чехии.</summary>
-            <p>Владимир Сорокин прошел долгий путь из череды метаморфоз...</p>
-          </details>
-        </article>
-      </div>
-    </section>
-  </main>
+  <div class="news-grid">
+    {{#each articles}}
+      <article class="article">
 
-  <div class="banner" role="complementary">Реклама: новые релизы каждую пятницу!</div>
+        <h3 class="article__title">
+          <a href="/articles/{{id}}">
+            {{title}}
+          </a>
+        </h3>
 
-  {{> footer}}
-  {{> scripts}}
-</body>
-</html>
+        {{#if summary}}
+          <p>
+            <strong>{{summary}}</strong>
+          </p>
+        {{/if}}
+
+        <p>
+          <strong>Автор:</strong>
+          {{author.name}}
+        </p>
+
+        {{#if artist}}
+          <p>
+            <strong>Артист:</strong>
+            {{artist.stageName}}
+          </p>
+        {{/if}}
+
+        {{#if publishedAt}}
+          <p>
+            <strong>Дата публикации:</strong>
+            {{formatDate publishedAt}}
+          </p>
+        {{/if}}
+
+        <div class="article__content">
+          <p>{{content}}</p>
+        </div>
+
+      </article>
+    {{else}}
+      <p>Новостей пока нет.</p>
+    {{/each}}
+  </div>
+</section>
+
+<div class="banner" role="complementary">
+  Реклама: новые релизы каждую пятницу!
+</div>
+
+{{/layout}}

@@ -1,0 +1,71 @@
+{{#> layout title=article.title}}
+
+<section class="section">
+  <h1 class="section__title">
+    {{article.title}}
+  </h1>
+
+  <p>
+    <strong>Тип:</strong>
+    {{typeLabel}}
+  </p>
+
+  <p>
+    <strong>Автор:</strong>
+    {{article.author.name}}
+  </p>
+
+  {{#if article.artist}}
+    <p>
+      <strong>Артист:</strong>
+      {{article.artist.stageName}}
+    </p>
+  {{else}}
+    <p>
+      <strong>Артист:</strong>
+      не указан
+    </p>
+  {{/if}}
+
+  {{#if article.summary}}
+    <p>
+      <strong>Краткое описание:</strong>
+      {{article.summary}}
+    </p>
+  {{/if}}
+
+  <div>
+    <strong>Текст статьи:</strong>
+    <p>{{article.content}}</p>
+  </div>
+
+  {{#if article.publishedAt}}
+    <p>
+      <strong>Дата публикации:</strong>
+      {{formatDate article.publishedAt}}
+    </p>
+  {{/if}}
+
+  <div class="article-actions">
+    <a href="/articles/{{article.id}}/edit">
+      Редактировать
+    </a>
+
+    <form
+      action="/articles/{{article.id}}?_method=DELETE"
+      method="POST"
+    >
+      <button type="submit">
+        Удалить
+      </button>
+    </form>
+  </div>
+
+  <div class="article-navigation">
+    <a href="{{backUrl}}">
+      Назад к разделу
+    </a>
+  </div>
+</section>
+
+{{/layout}}

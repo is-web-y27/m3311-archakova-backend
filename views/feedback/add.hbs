@@ -1,0 +1,74 @@
+{{#> layout title="Добавить отзыв"}}
+
+<section class="section">
+  <h1 class="section__title">
+    Добавить отзыв
+  </h1>
+
+  <form
+    action="/feedback"
+    method="POST"
+  >
+    <div>
+      <label for="userId">
+        Пользователь
+      </label>
+
+      <select
+        id="userId"
+        name="userId"
+        required
+      >
+        <option value="" disabled selected>
+          Выберите пользователя
+        </option>
+
+        {{#each users}}
+          <option value="{{id}}">
+            {{name}} — {{email}}
+          </option>
+        {{/each}}
+      </select>
+    </div>
+
+    <div>
+      <label for="message">
+        Сообщение
+      </label>
+
+      <textarea
+        id="message"
+        name="message"
+        minlength="10"
+        required
+      ></textarea>
+    </div>
+
+    <div>
+      <label for="rating">
+        Оценка
+      </label>
+
+      <select
+        id="rating"
+        name="rating"
+      >
+        <option value="5">5</option>
+        <option value="4">4</option>
+        <option value="3">3</option>
+        <option value="2">2</option>
+        <option value="1">1</option>
+      </select>
+    </div>
+
+    <button type="submit">
+      Отправить
+    </button>
+  </form>
+
+  <a href="/feedback">
+    Назад к отзывам
+  </a>
+</section>
+
+{{/layout}}

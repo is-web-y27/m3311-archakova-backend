@@ -1,0 +1,38 @@
+{{#> layout title="Статистика лейбла"}}
+
+<section class="section">
+  <h1>
+    {{labelStat.label.name}} — {{labelStat.year}}
+  </h1>
+
+  <p>
+    <strong>Доход:</strong>
+    {{labelStat.revenue}}
+  </p>
+
+  {{#if labelStat.marketShare}}
+    <p>
+      <strong>Доля рынка:</strong>
+      {{labelStat.marketShare}}%
+    </p>
+  {{/if}}
+
+  <a href="/label-stats/{{labelStat.id}}/edit">
+    Редактировать
+  </a>
+
+  <form
+    action="/label-stats/{{labelStat.id}}?_method=DELETE"
+    method="POST"
+  >
+    <button type="submit">
+      Удалить
+    </button>
+  </form>
+
+  <a href="/label-stats">
+    Назад к списку
+  </a>
+</section>
+
+{{/layout}}

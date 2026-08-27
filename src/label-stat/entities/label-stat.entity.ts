@@ -33,7 +33,7 @@ export class LabelStat {
     nullable: true,
     name: 'market_share',
   })
-  marketShare: string;
+  marketShare: string | null;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

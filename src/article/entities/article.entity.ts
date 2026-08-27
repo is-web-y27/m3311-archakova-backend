@@ -19,9 +19,6 @@ export class Article {
   @Column({ length: 200 })
   title: string;
 
-  @Column({ length: 200, unique: true })
-  slug: string;
-
   @Column({
     type: 'enum',
     enum: ArticleType,
@@ -29,7 +26,7 @@ export class Article {
   type: ArticleType;
 
   @Column({ type: 'text', nullable: true })
-  summary: string;
+  summary: string | null;
 
   @Column({ type: 'text' })
   content: string;
@@ -46,10 +43,10 @@ export class Article {
     onDelete: 'SET NULL',
   })
   @JoinColumn({ name: 'artist_id' })
-  artist: Artist;
+  artist: Artist | null;
 
   @Column({ name: 'published_at', type: 'timestamp', nullable: true })
-  publishedAt: Date;
+  publishedAt: Date | null;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

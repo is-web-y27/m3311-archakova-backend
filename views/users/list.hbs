@@ -1,0 +1,31 @@
+{{#> layout title="Пользователи"}}
+
+<section class="section">
+  <h1>Пользователи</h1>
+
+  <a href="/users/add">
+    Добавить пользователя
+  </a>
+
+  {{#each users}}
+    <div>
+      <a href="/users/{{id}}">
+        {{name}}
+      </a>
+
+      <span>
+        — {{email}}
+      </span>
+
+      {{#if role}}
+        <span>
+          — {{role}}
+        </span>
+      {{/if}}
+    </div>
+  {{else}}
+    <p>Пользователей пока нет.</p>
+  {{/each}}
+</section>
+
+{{/layout}}

@@ -1,0 +1,52 @@
+{{#> layout title="Редактировать музыкальный лейбл"}}
+
+<section class="section">
+  <h1>Редактировать музыкальный лейбл</h1>
+
+  <form
+    action="/music-labels/{{musicLabel.id}}?_method=PATCH"
+    method="POST"
+  >
+    <div>
+      <label for="name">Название</label>
+
+      <input
+        id="name"
+        name="name"
+        type="text"
+        value="{{musicLabel.name}}"
+        required
+      >
+    </div>
+
+    <div>
+      <label for="country">Страна</label>
+
+      <input
+        id="country"
+        name="country"
+        type="text"
+        value="{{musicLabel.country}}"
+      >
+    </div>
+
+    <div>
+      <label for="description">Описание</label>
+
+      <textarea
+        id="description"
+        name="description"
+      >{{musicLabel.description}}</textarea>
+    </div>
+
+    <button type="submit">
+      Сохранить
+    </button>
+  </form>
+
+  <a href="/music-labels/{{musicLabel.id}}">
+    Отмена
+  </a>
+</section>
+
+{{/layout}}

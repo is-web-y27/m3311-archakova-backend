@@ -1,0 +1,61 @@
+{{#> layout title="Редактировать пользователя"}}
+
+<section class="section">
+  <h1>Редактировать пользователя</h1>
+
+  <form
+    action="/users/{{user.id}}?_method=PATCH"
+    method="POST"
+  >
+    <div>
+      <label for="name">
+        Имя
+      </label>
+
+      <input
+        id="name"
+        name="name"
+        type="text"
+        value="{{user.name}}"
+        required
+      >
+    </div>
+
+    <div>
+      <label for="email">
+        Email
+      </label>
+
+      <input
+        id="email"
+        name="email"
+        type="email"
+        value="{{user.email}}"
+        required
+      >
+    </div>
+
+    <div>
+      <label for="role">
+        Роль
+      </label>
+
+      <input
+        id="role"
+        name="role"
+        type="text"
+        value="{{user.role}}"
+      >
+    </div>
+
+    <button type="submit">
+      Сохранить
+    </button>
+  </form>
+
+  <a href="/users/{{user.id}}">
+    Отмена
+  </a>
+</section>
+
+{{/layout}}

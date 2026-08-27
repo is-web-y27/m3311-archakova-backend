@@ -1,0 +1,119 @@
+{{#> layout title="Добавить статью"}}
+
+<section class="section">
+  <h1 class="section__title">
+    Добавить статью
+  </h1>
+
+  <form
+    action="/articles"
+    method="POST"
+  >
+    <div>
+      <label for="title">
+        Заголовок
+      </label>
+
+      <input
+        id="title"
+        name="title"
+        type="text"
+        required
+      >
+    </div>
+
+    <div>
+      <label for="type">
+        Тип статьи
+      </label>
+
+      <select
+        id="type"
+        name="type"
+        required
+      >
+        {{#each typeOptions}}
+          <option value="{{value}}">
+            {{label}}
+          </option>
+        {{/each}}
+      </select>
+    </div>
+
+    <div>
+      <label for="authorId">
+        Автор
+      </label>
+
+      <select
+        id="authorId"
+        name="authorId"
+        required
+      >
+        <option value="" disabled selected>
+          Выберите автора
+        </option>
+
+        {{#each users}}
+          <option value="{{id}}">
+            {{name}} — {{email}}
+          </option>
+        {{/each}}
+      </select>
+    </div>
+
+    <div>
+      <label for="artistId">
+        Артист
+      </label>
+
+      <select
+        id="artistId"
+        name="artistId"
+      >
+        <option value="">
+          Без артиста
+        </option>
+
+        {{#each artists}}
+          <option value="{{id}}">
+            {{stageName}}
+          </option>
+        {{/each}}
+      </select>
+    </div>
+
+    <div>
+      <label for="summary">
+        Краткое описание
+      </label>
+
+      <textarea
+        id="summary"
+        name="summary"
+      ></textarea>
+    </div>
+
+    <div>
+      <label for="content">
+        Текст статьи
+      </label>
+
+      <textarea
+        id="content"
+        name="content"
+        required
+      ></textarea>
+    </div>
+
+    <button type="submit">
+      Создать
+    </button>
+  </form>
+
+  <a href="/articles">
+    Назад к статьям
+  </a>
+</section>
+
+{{/layout}}

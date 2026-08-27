@@ -1,0 +1,50 @@
+{{#> layout title=artist.stageName}}
+
+<section class="section">
+  <h1>{{artist.stageName}}</h1>
+
+  {{#if artist.genre}}
+    <p>
+      <strong>Жанр:</strong>
+      {{artist.genre}}
+    </p>
+  {{/if}}
+
+  {{#if artist.country}}
+    <p>
+      <strong>Страна:</strong>
+      {{artist.country}}
+    </p>
+  {{/if}}
+
+  {{#if artist.label}}
+    <p>
+      <strong>Лейбл:</strong>
+      {{artist.label.name}}
+    </p>
+  {{else}}
+    <p>
+      <strong>Лейбл:</strong>
+      не указан
+    </p>
+  {{/if}}
+
+  <a href="/artists/{{artist.id}}/edit">
+    Редактировать
+  </a>
+
+  <form
+    action="/artists/{{artist.id}}?_method=DELETE"
+    method="POST"
+  >
+    <button type="submit">
+      Удалить
+    </button>
+  </form>
+
+  <a href="/artists">
+    Назад к списку
+  </a>
+</section>
+
+{{/layout}}
