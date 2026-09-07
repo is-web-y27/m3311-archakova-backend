@@ -76,4 +76,10 @@ export class FeedbackService {
     const feedback = await this.findOne(id);
     return this.feedbackRepository.remove(feedback);
   }
+
+  async findPage( page: number, limit: number) {
+    const [items, total] = await this.feedbackRepository.findAndCount({relations: {user: true}, order: {createdAt: 'DESC'}, skip: (page - 1) * limit, take: limit});
+
+    return {items, total};
+  }
 }

@@ -29,6 +29,32 @@ export class ArtistService {
     return artist;
   }
 
+  async findAllArticles(artistId: number){
+    const artist = await this.artistRepository.findOne({where: {id: artistId}, relations: {articles: true}});
+
+      if (!artist){
+        throw new NotFoundException(`Artist ${artistId} not found`);
+      }
+    return artist.articles;
+  }
+
+  
+  async findOneArticle(artistId: number, articleId: number){
+    const artist = await this.artistRepository.findOne({where: {id: articleId}, relations: {articles: true}});
+
+    if(!artist){
+      throw new NotFoundException(`Artist ${artistId} not found`);
+    }
+
+    const article = artist.articles.find((article) => article.id === articleId);
+
+    if(!article){
+      throw new NotFoundException(`Article ${articleId} associated with the artist ${artistId} not found`)
+    }
+
+    return article;
+  }
+
   async update(id: number, updateArtistDto: UpdateArtistDto) {
     const artist = await this.findOne(id);
 
@@ -45,5 +71,11 @@ export class ArtistService {
   async remove(id: number) {
     const artist = await this.findOne(id);
     return this.artistRepository.remove(artist);
+  }
+
+  async findPage(page: number, limit: number){
+    const [items, total] = await this.artistRepository.findAndCount({relations: {label: true}, order: {id: 'ASC'}, skip: (page-1)*limit, take: limit});
+
+    return {items, total};
   }
 }

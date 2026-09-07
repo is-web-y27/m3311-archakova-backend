@@ -60,12 +60,19 @@ export class LabelStatService {
     }
     if (marketShare !== undefined) {
       labelStat.marketShare = marketShare.trim() ? marketShare: null;
-      return this.labelStatRepository.save(labelStat);
     }
+    
+    return this.labelStatRepository.save(labelStat);
   }
 
   async remove(id: number) {
     const labelStat = await this.findOne(id);
     return this.labelStatRepository.remove(labelStat); 
+  }
+
+  async findPage(page: number, limit: number){
+    const [items, total] = await this.labelStatRepository.findAndCount({relations: {label: true}, order: {year: 'ASC'}, skip: (page-1)*limit, take: limit});
+
+    return {items, total};
   }
 }

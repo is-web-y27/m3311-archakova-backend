@@ -110,4 +110,11 @@ export class ArticleService {
 
     return removedArticle;
     }
+
+  
+  async findPage(page: number, limit: number){
+    const [items, total] = await this.articleRepository.findAndCount({relations: {author: true, artist: true}, order: {publishedAt: 'DESC'}, skip: (page-1)*limit, take: limit});
+
+    return {items, total};
+  }
 }
