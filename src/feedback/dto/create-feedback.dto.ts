@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumberString, IsOptional, IsString } from "class-validator";
+import { IsIn, IsNotEmpty, IsNumberString, IsOptional, IsString } from "class-validator";
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 
 export class CreateFeedbackDto {
@@ -14,6 +14,7 @@ export class CreateFeedbackDto {
 
     @ApiPropertyOptional({example: '5', description: 'Оценка'})
     @IsOptional()
-    @IsString()
+    @IsNumberString({no_symbols: true})
+    @IsIn(['1', '2', '3', '4', '5'])
     rating?: string;
 }

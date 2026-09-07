@@ -5,22 +5,22 @@ import { UpdateArtistDto } from "./dto/update-artist.dto";
 import { PaginationQueryDto } from "src/common/dto/pagination-query.dto";
 import type { Response } from 'express';
 import { createPaginationLinks } from "src/common/pagination-links";
-import { ApiBadRequestResponse, ApiConflictResponse, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
+import { ApiBadRequestResponse, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
 import { ArtistResponseDto } from "./dto/artist-response.dto";
 import { PaginatedArtistsResponseDto } from "./dto/paginated-artists-response.dto";
 import { ArticleResponseDto } from "src/article/dto/article-response.dto";
-import { ErrorResponseDto } from "src/article/dto/error-response.dto";
+import { BadRequestResponseDto, NotFoundResponseDto } from "src/article/dto/error-response.dto";
 
 @ApiTags('Artists')
+@UsePipes(new ValidationPipe({transform: true, whitelist: true, forbidNonWhitelisted: true}))
 @Controller('api/artists')
 export class ArtistApiController {
     constructor(private readonly artistService: ArtistService){}
 
-    @UsePipes(new ValidationPipe({transform: true, whitelist: true, forbidNonWhitelisted: true}))
     @Get()
     @ApiOperation({summary: 'Получить страницу исполнителей'})
     @ApiOkResponse({description: 'Страница исполнителей получена', type: PaginatedArtistsResponseDto})
-    @ApiBadRequestResponse({description: 'Некорректные параметры пагинации', type: ErrorResponseDto})
+    @ApiBadRequestResponse({description: 'Некорректные параметры пагинации', type: BadRequestResponseDto})
     async findAll(@Query() query: PaginationQueryDto, @Res({passthrough: true}) response: Response){
         const {page, limit} = query;
 
@@ -37,8 +37,8 @@ export class ArtistApiController {
     @Get(':id')
     @ApiOperation({summary: 'Получить исполнителя по ID'})
     @ApiOkResponse({description: 'Исполнитель найден', type: ArtistResponseDto})
-    @ApiBadRequestResponse({description: 'Некорректный ID', type: ErrorResponseDto})
-    @ApiNotFoundResponse({description: 'Исполнитель не найден', type: ErrorResponseDto})
+    @ApiBadRequestResponse({description: 'Некорректный ID', type: BadRequestResponseDto})
+    @ApiNotFoundResponse({description: 'Исполнитель не найден', type: NotFoundResponseDto})
     findOne(@Param('id', ParseIntPipe) id: number){
         return this.artistService.findOne(id);
     }
@@ -46,8 +46,8 @@ export class ArtistApiController {
     @Get(':artistId/articles')
     @ApiOperation({summary: 'Получить статьи исполнителя'})
     @ApiOkResponse({description: 'Статьи исполнителя получены', type: ArticleResponseDto, isArray: true})
-    @ApiBadRequestResponse({description: 'Некорректный ID исполнителя', type: ErrorResponseDto})
-    @ApiNotFoundResponse({description: 'Исполнитель не найден', type: ErrorResponseDto})
+    @ApiBadRequestResponse({description: 'Некорректный ID исполнителя', type: BadRequestResponseDto})
+    @ApiNotFoundResponse({description: 'Исполнитель не найден', type: NotFoundResponseDto})
     findArticles(@Param('artistId', ParseIntPipe) artistId: number){
         return this.artistService.findAllArticles(artistId);
     }
@@ -55,8 +55,8 @@ export class ArtistApiController {
     @Get(':artistId/articles/:articleId')
     @ApiOperation({summary: 'Получить статью исполнителя'})
     @ApiOkResponse({description: 'Статья исполнителя найдена', type: ArticleResponseDto})
-    @ApiBadRequestResponse({description: 'Некорректный ID', type: ErrorResponseDto})
-    @ApiNotFoundResponse({description: 'Исполнитель или статья не найдены', type: ErrorResponseDto})
+    @ApiBadRequestResponse({description: 'Некорректный ID', type: BadRequestResponseDto})
+    @ApiNotFoundResponse({description: 'Исполнитель или статья не найдены', type: NotFoundResponseDto})
     findArticle(@Param('artistId', ParseIntPipe) artistId: number, @Param('articleId', ParseIntPipe) articleId: number){
         return this.artistService.findOneArticle(artistId, articleId);
     }
@@ -64,8 +64,8 @@ export class ArtistApiController {
     @Post()
     @ApiOperation({summary: 'Создать исполнителя'})
     @ApiCreatedResponse({description: 'Исполнитель создан', type: ArtistResponseDto})
-    @ApiBadRequestResponse({description: 'Некорректное тело запроса', type: ErrorResponseDto})
-    @ApiNotFoundResponse({description: 'Музыкальный лейбл не найден', type: ErrorResponseDto})
+    @ApiBadRequestResponse({description: 'Некорректное тело запроса', type: BadRequestResponseDto})
+    @ApiNotFoundResponse({description: 'Музыкальный лейбл не найден', type: NotFoundResponseDto})
     create(@Body() createArtistDto: CreateArtistDto){
         return this.artistService.create(createArtistDto);
     }
@@ -73,8 +73,8 @@ export class ArtistApiController {
     @Patch(':id')
     @ApiOperation({summary: 'Обновить исполнителя'})
     @ApiOkResponse({description: 'Исполнитель обновлён', type: ArtistResponseDto})
-    @ApiBadRequestResponse({description: 'Некорректный ID или тело запроса', type: ErrorResponseDto})
-    @ApiNotFoundResponse({description: 'Исполнитель или музыкальный лейбл не найден', type: ErrorResponseDto})
+    @ApiBadRequestResponse({description: 'Некорректный ID или тело запроса', type: BadRequestResponseDto})
+    @ApiNotFoundResponse({description: 'Исполнитель или музыкальный лейбл не найден', type: NotFoundResponseDto})
     update(@Param('id', ParseIntPipe) id: number, @Body() updateArtistDto: UpdateArtistDto){
         return this.artistService.update(id, updateArtistDto);
     }
@@ -82,9 +82,8 @@ export class ArtistApiController {
     @Delete(':id')
     @ApiOperation({summary: 'Удалить исполнителя'})
     @ApiOkResponse({description: 'Исполнитель удалён', type: ArtistResponseDto})
-    @ApiBadRequestResponse({description: 'Некорректный ID', type: ErrorResponseDto})
-    @ApiNotFoundResponse({description: 'Исполнитель не найден', type: ErrorResponseDto})
-    @ApiConflictResponse({description: 'Удаление конфликтует со связанными данными', type: ErrorResponseDto})
+    @ApiBadRequestResponse({description: 'Некорректный ID', type: BadRequestResponseDto})
+    @ApiNotFoundResponse({description: 'Исполнитель не найден', type: NotFoundResponseDto})
     remove(@Param('id', ParseIntPipe) id: number){
         return this.artistService.remove(id);
     }

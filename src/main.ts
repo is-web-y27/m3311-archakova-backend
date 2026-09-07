@@ -47,6 +47,7 @@ async function bootstrap() {
     .build();
 
   const swaggerDocument = SwaggerModule.createDocument(app, swaggerConfig);
+  swaggerDocument.paths = Object.fromEntries(Object.entries(swaggerDocument.paths).filter(([path]) => path.startsWith('/api/')));
 
   SwaggerModule.setup('api/docs', app, swaggerDocument);
 
