@@ -104,9 +104,11 @@ export class ArticleService {
   async remove(id: number) {
     const article = await this.findOne(id);
 
-    const removedArticle = await this.articleRepository.remove(article);
+    const removedArticle = { ...article };
 
-    this.articleUpdates$.next({data: {action: 'deleted', id, title: article.title, type: article.type}});
+    await this.articleRepository.remove(article);
+
+    this.articleUpdates$.next({data: {action: 'deleted', id: removedArticle.id, title: removedArticle.title, type: removedArticle.type}});
 
     return removedArticle;
     }

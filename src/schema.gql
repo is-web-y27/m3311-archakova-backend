@@ -1,0 +1,520 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Article {
+  """Артист, связанный со статьей"""
+  artist: Artist
+
+  """Автор статьи"""
+  author: User!
+
+  """Полный текст статьи"""
+  content: String!
+
+  """Дата создания статьи"""
+  createdAt: DateTime!
+
+  """Id статьи"""
+  id: Int!
+
+  """Дата публикации статьи"""
+  publishedAt: DateTime
+
+  """Краткое описание статьи"""
+  summary: String
+
+  """Название статьи"""
+  title: String!
+
+  """Тип статьи"""
+  type: ArticleType!
+
+  """Дата обновления статьи"""
+  updatedAt: DateTime!
+}
+
+"""Тип статьи"""
+enum ArticleType {
+  CONCERT_ANNOUNCEMENT
+  NEWS
+  REVIEW
+}
+
+type Artist {
+  """Статьи, связанные с артистом"""
+  articles: [Article!]!
+
+  """Страна исполнителя"""
+  country: String
+
+  """Дата создания артиста"""
+  createdAt: DateTime!
+
+  """Жанр"""
+  genre: String
+
+  """Id артиста"""
+  id: Int!
+
+  """Музыкальный лейбл артиста"""
+  label: MusicLabel
+
+  """Имя артиста"""
+  stageName: String!
+
+  """Дата обновления артиста"""
+  updatedAt: DateTime!
+}
+
+input CreateArticleInput {
+  """Id артиста, связанного со статьей"""
+  artistId: ID
+
+  """Id автора статьи"""
+  authorId: ID!
+
+  """Полный текст статьи"""
+  content: String!
+
+  """Краткое описание статьи"""
+  summary: String
+
+  """Название статьи"""
+  title: String!
+
+  """Тип статьи"""
+  type: ArticleType!
+}
+
+input CreateArtistInput {
+  """Страна исполнителя"""
+  country: String
+
+  """Жанр"""
+  genre: String
+
+  """Id музыкального лейбла"""
+  labelId: ID
+
+  """Имя артиста"""
+  stageName: String!
+}
+
+input CreateFeedbackInput {
+  """Текст отзыва"""
+  message: String!
+
+  """Оценка пользователя"""
+  rating: String
+
+  """Id пользователя"""
+  userId: ID!
+}
+
+input CreateLabelStatInput {
+  """Id музыкального лейбла"""
+  labelId: ID!
+
+  """Доля музыкального лейбла на рынке"""
+  marketShare: String
+
+  """Доход музыкального лейбла"""
+  revenue: String!
+
+  """Год статистики"""
+  year: String!
+}
+
+input CreateMusicLabelInput {
+  """Страна музыкального лейбла"""
+  country: String
+
+  """Описание музыкального лейбла"""
+  description: String
+
+  """Название музыкального лейбла"""
+  name: String!
+}
+
+input CreateUserInput {
+  """Почта пользователя"""
+  email: String!
+
+  """Имя пользователя"""
+  name: String!
+
+  """Роль пользователя"""
+  role: String
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Feedback {
+  """Дата создания отзыва"""
+  createdAt: DateTime!
+
+  """Id отзыва"""
+  id: Int!
+
+  """Текст отзыва"""
+  message: String!
+
+  """Оценка пользователя"""
+  rating: Int!
+
+  """Пользователь, оставивший отзыв"""
+  user: User!
+}
+
+type LabelStat {
+  """Дата создания записи статистики"""
+  createdAt: DateTime!
+
+  """Id записи статистики"""
+  id: Int!
+
+  """Музыкальный лейбл"""
+  label: MusicLabel!
+
+  """Доля музыкального лейбла на рынке"""
+  marketShare: String
+
+  """Доход музыкального лейбла"""
+  revenue: String!
+
+  """Год статистики"""
+  year: Int!
+}
+
+type MusicLabel {
+  """Артисты музыкального лейбла"""
+  artists: [Artist!]!
+
+  """Страна музыкального лейбла"""
+  country: String
+
+  """Дата создания музыкального лейбла"""
+  createdAt: DateTime!
+
+  """Описание музыкального лейбла"""
+  description: String
+
+  """Id музыкального лейбла"""
+  id: Int!
+
+  """Название музыкального лейбла"""
+  name: String!
+
+  """Статистика музыкального лейбла"""
+  stats: [LabelStat!]!
+
+  """Дата обновления музыкального лейбла"""
+  updatedAt: DateTime!
+}
+
+type Mutation {
+  """Создать статью"""
+  createArticle(input: CreateArticleInput!): Article!
+
+  """Создать артиста"""
+  createArtist(input: CreateArtistInput!): Artist!
+
+  """Создать отзыв"""
+  createFeedback(input: CreateFeedbackInput!): Feedback!
+
+  """Создать запись статистики"""
+  createLabelStat(input: CreateLabelStatInput!): LabelStat!
+
+  """Создать музыкальный лейбл"""
+  createMusicLabel(input: CreateMusicLabelInput!): MusicLabel!
+
+  """Создать пользователя"""
+  createUser(input: CreateUserInput!): User!
+
+  """Удалить статью"""
+  removeArticle(id: Int!): Article!
+
+  """Удалить артиста"""
+  removeArtist(id: Int!): Artist!
+
+  """Удалить отзыв"""
+  removeFeedback(id: Int!): Feedback!
+
+  """Удалить запись статистики"""
+  removeLabelStat(id: Int!): LabelStat!
+
+  """Удалить музыкальный лейбл"""
+  removeMusicLabel(id: Int!): MusicLabel!
+
+  """Удалить пользователя"""
+  removeUser(id: Int!): User!
+
+  """Изменить статью"""
+  updateArticle(id: Int!, input: UpdateArticleInput!): Article!
+
+  """Изменить артиста"""
+  updateArtist(id: Int!, input: UpdateArtistInput!): Artist!
+
+  """Изменить отзыв"""
+  updateFeedback(id: Int!, input: UpdateFeedbackInput!): Feedback!
+
+  """Изменить запись статистики"""
+  updateLabelStat(id: Int!, input: UpdateLabelStatInput!): LabelStat!
+
+  """Изменить музыкальный лейбл"""
+  updateMusicLabel(id: Int!, input: UpdateMusicLabelInput!): MusicLabel!
+
+  """Изменить пользователя"""
+  updateUser(id: Int!, input: UpdateUserInput!): User!
+}
+
+type PaginatedArticlesType {
+  """Статьи этой страницы"""
+  items: [Article!]!
+
+  """Определенное количество статей на странице"""
+  limit: Int!
+
+  """Номер текущей страницы"""
+  page: Int!
+
+  """Общее количество статьей всего"""
+  total: Int!
+
+  """Общее количество страниц"""
+  totalPages: Int!
+}
+
+type PaginatedArtistsType {
+  """Артисты этой страницы"""
+  items: [Artist!]!
+
+  """Определенное количество артистов на странице"""
+  limit: Int!
+
+  """Номер текущей страницы"""
+  page: Int!
+
+  """Общее количество артистов всего"""
+  total: Int!
+
+  """Общее количество страниц"""
+  totalPages: Int!
+}
+
+type PaginatedFeedbackType {
+  """Отзывы этой страницы"""
+  items: [Feedback!]!
+
+  """Определенное количество отзывов на странице"""
+  limit: Int!
+
+  """Номер текущей страницы"""
+  page: Int!
+
+  """Общее количество отзывов всего"""
+  total: Int!
+
+  """Общее количество страниц"""
+  totalPages: Int!
+}
+
+type PaginatedLabelStatsType {
+  """Записи статистики этой страницы"""
+  items: [LabelStat!]!
+
+  """Определенное количество записей статистики на странице"""
+  limit: Int!
+
+  """Номер текущей страницы"""
+  page: Int!
+
+  """Общее количество записей статистики всего"""
+  total: Int!
+
+  """Общее количество страниц"""
+  totalPages: Int!
+}
+
+type PaginatedMusicLabelsType {
+  """Музыкальные лейблы этой страницы"""
+  items: [MusicLabel!]!
+
+  """Определенное количество музыкальных лейблов на странице"""
+  limit: Int!
+
+  """Номер текущей страницы"""
+  page: Int!
+
+  """Общее количество музыкальных лейблов всего"""
+  total: Int!
+
+  """Общее количество страниц"""
+  totalPages: Int!
+}
+
+type PaginatedUsersType {
+  """Пользователи этой страницы"""
+  items: [User!]!
+
+  """Определенное количество пользователей на странице"""
+  limit: Int!
+
+  """Номер текущей страницы"""
+  page: Int!
+
+  """Общее количество пользователей всего"""
+  total: Int!
+
+  """Общее количество страниц"""
+  totalPages: Int!
+}
+
+type Query {
+  """Статья по Id"""
+  article(id: Int!): Article!
+
+  """Статьи с пагинацией"""
+  articles(limit: Int, page: Int): PaginatedArticlesType!
+
+  """Артист по Id"""
+  artist(id: Int!): Artist!
+
+  """Артисты с пагинацией"""
+  artists(limit: Int, page: Int): PaginatedArtistsType!
+
+  """Отзыв по Id"""
+  feedback(id: Int!): Feedback!
+
+  """Отзывы с пагинацией"""
+  feedbacks(limit: Int, page: Int): PaginatedFeedbackType!
+
+  """Запись статистики по Id"""
+  labelStat(id: Int!): LabelStat!
+
+  """Статистика музыкальных лейблов с пагинацией"""
+  labelStats(limit: Int, page: Int): PaginatedLabelStatsType!
+
+  """Музыкальный лейбл по Id"""
+  musicLabel(id: Int!): MusicLabel!
+
+  """Музыкальные лейблы с пагинацией"""
+  musicLabels(limit: Int, page: Int): PaginatedMusicLabelsType!
+
+  """Пользователь по Id"""
+  user(id: Int!): User!
+
+  """Пользователи с пагинацией"""
+  users(limit: Int, page: Int): PaginatedUsersType!
+}
+
+input UpdateArticleInput {
+  """Id артиста, связанного со статьей"""
+  artistId: ID
+
+  """Id автора статьи"""
+  authorId: ID
+
+  """Полный текст статьи"""
+  content: String
+
+  """Краткое описание статьи"""
+  summary: String
+
+  """Название статьи"""
+  title: String
+
+  """Тип статьи"""
+  type: ArticleType
+}
+
+input UpdateArtistInput {
+  """Страна исполнителя"""
+  country: String
+
+  """Жанр"""
+  genre: String
+
+  """Id музыкального лейбла"""
+  labelId: ID
+
+  """Имя артиста"""
+  stageName: String
+}
+
+input UpdateFeedbackInput {
+  """Текст отзыва"""
+  message: String
+
+  """Оценка пользователя"""
+  rating: String
+
+  """Id пользователя"""
+  userId: ID
+}
+
+input UpdateLabelStatInput {
+  """Id музыкального лейбла"""
+  labelId: ID
+
+  """Доля музыкального лейбла на рынке"""
+  marketShare: String
+
+  """Доход музыкального лейбла"""
+  revenue: String
+
+  """Год статистики"""
+  year: String
+}
+
+input UpdateMusicLabelInput {
+  """Страна музыкального лейбла"""
+  country: String
+
+  """Описание музыкального лейбла"""
+  description: String
+
+  """Название музыкального лейбла"""
+  name: String
+}
+
+input UpdateUserInput {
+  """Почта пользователя"""
+  email: String
+
+  """Имя пользователя"""
+  name: String
+
+  """Роль пользователя"""
+  role: String
+}
+
+type User {
+  """Статьи пользователя"""
+  articles: [Article!]!
+
+  """Дата создания пользователя"""
+  createdAt: DateTime!
+
+  """Почта пользователя"""
+  email: String!
+
+  """Отзывы пользователя"""
+  feedbacks: [Feedback!]!
+
+  """Id пользователя"""
+  id: Int!
+
+  """Имя пользователя"""
+  name: String!
+
+  """Роль пользователя"""
+  role: String!
+
+  """Дата обновления пользователя"""
+  updatedAt: DateTime!
+}
