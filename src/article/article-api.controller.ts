@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Query, Res, UsePipes, ValidationPipe } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Header, Param, ParseFilePipeBuilder, ParseIntPipe, Patch, Post, Query, Res, UploadedFile, UseInterceptors, UsePipes, ValidationPipe } from "@nestjs/common";
 import { ArticleService } from "./article.service";
 import { CreateArticleDto } from "./dto/create-article.dto";
 import { UpdateArticleDto } from "./dto/update-article.dto";
@@ -9,17 +9,24 @@ import { ApiBadRequestResponse, ApiCreatedResponse, ApiNotFoundResponse, ApiOkRe
 import { ArticleResponseDto } from "./dto/article-response.dto";
 import { PaginatedArticlesResponseDto } from "./dto/paginated-articles-response.dto";
 import { BadRequestResponseDto, NotFoundResponseDto } from "./dto/error-response.dto";
+import { ETagInterceptor } from "src/common/interceptors/etag.interceptor";
+import { CacheInterceptor, CacheTTL } from "@nestjs/cache-manager";
+import { StorageService } from "src/infrastructure/storage/storage.service";
+import { FileInterceptor } from "@nestjs/platform-express";
 
+@UseInterceptors(ETagInterceptor, CacheInterceptor)
 @ApiTags('Articles')
 @UsePipes(new ValidationPipe({transform: true, whitelist: true, forbidNonWhitelisted: true}))
 @Controller('api/articles')
 export class ArticleApiController {
-    constructor(private readonly articleService: ArticleService) {}
+    constructor(private readonly articleService: ArticleService, private readonly storageService: StorageService) {}
 
     @Get()
+    @CacheTTL(5000)
     @ApiOperation({summary: 'Получить страницу статей'})
     @ApiOkResponse({description: 'Страница статей получена', type: PaginatedArticlesResponseDto})
     @ApiBadRequestResponse({description: 'Некорректные параметры пагинации', type: BadRequestResponseDto})
+    @Header('Cache-Control', 'public, max-age=60')
     async findAll(@Query() query: PaginationQueryDto, @Res({ passthrough: true }) response: Response,) {
         const { page, limit } = query;
         const { items, total } =
@@ -35,14 +42,27 @@ export class ArticleApiController {
 
 
     @Get(':id')
+    @CacheTTL(5000)
     @ApiOperation({summary: 'Получить статью по ID'})
     @ApiOkResponse({description: 'Статья найдена', type: ArticleResponseDto})
     @ApiBadRequestResponse({description: 'Некорректный ID', type: BadRequestResponseDto})
     @ApiNotFoundResponse({description: 'Статья не найдена', type: NotFoundResponseDto})
+    @Header('Cache-Control', 'public, max-age=60')
     findOne(@Param('id', ParseIntPipe) id: number){
         return this.articleService.findOne(id);
     }
 
+    @Post(':id/cover')
+    @UseInterceptors(FileInterceptor('file'))
+    async uploadCover(  
+        @Param('id', ParseIntPipe) id: number,
+        @UploadedFile(
+            new ParseFilePipeBuilder().addFileTypeValidator({fileType: /^image\/(jpeg|png|webp)$/}).addMaxSizeValidator({maxSize: 5 * 1024 * 1024}).build()) file: Express.Multer.File) {
+        await this.articleService.findOne(id);
+        const coverUrl = await this.storageService.uploadArticleCover(file);
+        return this.articleService.updateCover(id, coverUrl);
+    }
+    
     @Post()
     @ApiOperation({summary: 'Создать статью'})
     @ApiCreatedResponse({description: 'Статья создана', type: ArticleResponseDto})

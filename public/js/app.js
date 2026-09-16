@@ -34,15 +34,13 @@ const reportLoadTime = () => {
   const footer = document.querySelector('.footer');
   if (!footer) return;
 
-  let box = footer.querySelector('[data-load-time]');
-  if (!box) {
-    box = document.createElement('p');
-    box.dataset.loadTime = 'true'; 
-    footer.appendChild(box);
-  }
+  const box  = footer.querySelector('[data-load-time]');
+  if (!box) return;
+
+  const serverTime = box.dataset.serverTime;
 
   const now = new Date();
-  box.textContent = `Страница загружена за ${ms} мс • ${now.toLocaleString()}`;
+  box.textContent = `Сервер: ${serverTime}; Клиент: ${ms} мс • ${now.toLocaleString()}`;
 };
 
 window.addEventListener('DOMContentLoaded', highlightActiveNav);

@@ -13,6 +13,14 @@
           </a>
         </h3>
 
+        {{#if coverUrl}}
+          <img
+            class="article__cover"
+            src="{{coverUrl}}"
+            alt="Обложка статьи {{title}}"
+          >
+        {{/if}}
+
         {{#if summary}}
           <p>
             <strong>{{summary}}</strong>

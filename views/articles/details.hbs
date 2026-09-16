@@ -5,6 +5,30 @@
     {{article.title}}
   </h1>
 
+  {{#if article.coverUrl}}
+    <img
+      class="article__cover"
+      src="{{article.coverUrl}}"
+      alt="Обложка статьи {{article.title}}"
+    >
+  {{/if}}
+  
+  <form class="cover-form" data-article-id="{{article.id}}">
+    <label>
+      Обложка статьи:
+      <input
+        type="file"
+        name="file"
+        accept="image/png,image/jpeg,image/webp"
+        required
+      >
+    </label>
+
+    <button type="submit">
+      Загрузить обложку
+    </button>
+  </form>
+  
   <p>
     <strong>Тип:</strong>
     {{typeLabel}}
