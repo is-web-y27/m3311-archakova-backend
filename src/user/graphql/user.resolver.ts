@@ -7,8 +7,11 @@ import { UserService } from '../user.service';
 import { PaginatedUsersType } from './paginated-users.type';
 import { ArticleTypeGraphql } from 'src/article/graphql/article.type';
 import { FeedbackTypeGraphql } from 'src/feedback/graphql/feedback.type';
+import { Roles } from 'src/infrastructure/auth/decorators/roles.decorator';
+import { UserRole } from '../entities/user-role.enum';
 
 @UsePipes(new ValidationPipe({transform: true, whitelist: true, forbidNonWhitelisted: true}))
+@Roles(UserRole.ADMIN)
 @Resolver(() => UserTypeGraphql)
 export class UserResolver {
     constructor(private readonly userService: UserService){}

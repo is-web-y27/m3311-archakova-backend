@@ -5,20 +5,25 @@ import { UpdateMusicLabelDto } from "./dto/update-music-label.dto";
 import { createPaginationLinks } from "src/common/pagination-links";
 import { PaginationQueryDto } from "src/common/dto/pagination-query.dto";
 import type { Response} from 'express';
-import { ApiBadRequestResponse, ApiConflictResponse, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
+import { ApiBadRequestResponse, ApiConflictResponse, ApiCookieAuth, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
 import { MusicLabelResponseDto } from "./dto/music-label-response.dto";
 import { PaginatedMusicLabelsResponseDto } from "./dto/paginated-music-labels-response.dto";
 import { ArtistResponseDto } from "src/artist/dto/artist-response.dto";
 import { LabelStatResponseDto } from "src/label-stat/dto/label-stat-response.dto";
 import { BadRequestResponseDto, ConflictResponseDto, NotFoundResponseDto } from "src/article/dto/error-response.dto";
+import { PublicAccess } from "src/infrastructure/auth/decorators/public-access.decorator";
+import { Roles } from "src/infrastructure/auth/decorators/roles.decorator";
+import { UserRole } from "src/user/entities/user-role.enum";
 
 @ApiTags('Music labels')
 @UsePipes(new ValidationPipe({transform: true, whitelist: true, forbidNonWhitelisted: true}))
+@Roles(UserRole.ADMIN)
 @Controller('api/music-labels')
 export class MusicLabelApiController{
     constructor(private readonly musicLabelService: MusicLabelService){}
 
     @Get()
+    @PublicAccess()
     @ApiOperation({summary: 'Получить страницу музыкальных лейблов'})
     @ApiOkResponse({description: 'Страница музыкальных лейблов получена', type: PaginatedMusicLabelsResponseDto})
     @ApiBadRequestResponse({description: 'Некорректные параметры пагинации', type: BadRequestResponseDto})
@@ -36,6 +41,7 @@ export class MusicLabelApiController{
     }    
 
     @Get(':id')
+    @PublicAccess()
     @ApiOperation({summary: 'Получить музыкальный лейбл по ID'})
     @ApiOkResponse({description: 'Музыкальный лейбл найден', type: MusicLabelResponseDto})
     @ApiBadRequestResponse({description: 'Некорректный ID', type: BadRequestResponseDto})
@@ -45,6 +51,7 @@ export class MusicLabelApiController{
     }
 
     @Get(':labelId/artists')
+    @PublicAccess()
     @ApiOperation({summary: 'Получить исполнителей музыкального лейбла'})
     @ApiOkResponse({description: 'Исполнители музыкального лейбла получены', type: ArtistResponseDto, isArray: true})
     @ApiBadRequestResponse({description: 'Некорректный ID лейбла', type: BadRequestResponseDto})
@@ -54,6 +61,7 @@ export class MusicLabelApiController{
     }
 
     @Get(':labelId/artists/:artistId')
+    @PublicAccess()
     @ApiOperation({summary: 'Получить исполнителя музыкального лейбла'})
     @ApiOkResponse({description: 'Исполнитель музыкального лейбла найден', type: ArtistResponseDto})
     @ApiBadRequestResponse({description: 'Некорректный ID', type: BadRequestResponseDto})
@@ -63,6 +71,7 @@ export class MusicLabelApiController{
     }
 
     @Get(':labelId/label-stats')
+    @PublicAccess()
     @ApiOperation({summary: 'Получить статистику музыкального лейбла'})
     @ApiOkResponse({description: 'Статистика музыкального лейбла получена', type: LabelStatResponseDto, isArray: true})
     @ApiBadRequestResponse({description: 'Некорректный ID лейбла', type: BadRequestResponseDto})
@@ -72,6 +81,7 @@ export class MusicLabelApiController{
     }
 
     @Get(':labelId/label-stats/:statId')
+    @PublicAccess()
     @ApiOperation({summary: 'Получить запись статистики музыкального лейбла'})
     @ApiOkResponse({description: 'Запись статистики найдена', type: LabelStatResponseDto})
     @ApiBadRequestResponse({description: 'Некорректный ID', type: BadRequestResponseDto})
@@ -81,6 +91,7 @@ export class MusicLabelApiController{
     }
 
     @Post()
+    @ApiCookieAuth('supertokens')
     @ApiOperation({summary: 'Создать музыкальный лейбл'})
     @ApiCreatedResponse({description: 'Музыкальный лейбл создан', type: MusicLabelResponseDto})
     @ApiBadRequestResponse({description: 'Некорректное тело запроса', type: BadRequestResponseDto})
@@ -90,6 +101,7 @@ export class MusicLabelApiController{
     }
 
     @Patch(':labelId')
+    @ApiCookieAuth('supertokens')
     @ApiOperation({summary: 'Обновить музыкальный лейбл'})
     @ApiOkResponse({description: 'Музыкальный лейбл обновлён', type: MusicLabelResponseDto})
     @ApiBadRequestResponse({description: 'Некорректный ID или тело запроса', type: BadRequestResponseDto})
@@ -100,6 +112,7 @@ export class MusicLabelApiController{
     }
 
     @Delete(':labelId')
+    @ApiCookieAuth('supertokens')
     @ApiOperation({summary: 'Удалить музыкальный лейбл'})
     @ApiOkResponse({description: 'Музыкальный лейбл удалён', type: MusicLabelResponseDto})
     @ApiBadRequestResponse({description: 'Некорректный ID', type: BadRequestResponseDto})

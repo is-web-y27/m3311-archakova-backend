@@ -8,11 +8,14 @@ import {
 } from 'typeorm';
 import { Article } from '../../article/entities/article.entity';
 import { Feedback } from '../../feedback/entities/feedback.entity';
+import { UserRole } from './user-role.enum';
 
 @Entity('users')
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
+
+  
 
   @Column({ length: 100 })
   name: string;
@@ -20,9 +23,18 @@ export class User {
   @Column({ unique: true, length: 150 })
   email: string;
 
-  @Column({ default: 'user', length: 30 })
-  role: string;
-
+  @Column({ type: 'varchar', default: UserRole.USER, length: 30 })
+  role: UserRole;
+  
+  @Column({
+    name: 'auth_provider_id',
+    type: 'varchar',
+    length: 128,
+    nullable: true,
+    unique: true,
+  })
+  authProviderId: string | null;
+  
   @OneToMany(() => Article, (article) => article.author)
   articles: Article[];
 

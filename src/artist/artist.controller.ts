@@ -4,7 +4,10 @@ import { CreateArtistDto } from './dto/create-artist.dto';
 import { UpdateArtistDto } from './dto/update-artist.dto';
 import type { Response } from 'express';
 import { MusicLabelService } from 'src/music-label/music-label.service';
+import { Roles } from 'src/infrastructure/auth/decorators/roles.decorator';
+import { UserRole } from 'src/user/entities/user-role.enum';
 
+@Roles(UserRole.ADMIN)
 @Controller('artists')
 export class ArtistController {
   constructor(private readonly artistService: ArtistService, private readonly musicLabelService: MusicLabelService) {}

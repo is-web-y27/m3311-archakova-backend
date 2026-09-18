@@ -1,0 +1,21 @@
+{{#> layout title="Вход"}}
+
+<section class="section auth">
+  <h1 class="section__title">Вход в Mononews</h1>
+
+  <form class="auth__form" data-auth-form="signin" data-return-to="{{returnTo}}">
+    <label for="email">Электронная почта</label>
+    <input id="email" name="email" type="email" autocomplete="email" required>
+
+    <label for="password">Пароль</label>
+    <input id="password" name="password" type="password" autocomplete="current-password" required>
+
+    <p class="auth__error" data-auth-error hidden></p>
+
+    <button type="submit">Войти</button>
+  </form>
+
+  <p>Нет аккаунта? <a href="/register">Зарегистрироваться</a></p>
+</section>
+
+{{/layout}}

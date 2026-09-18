@@ -1,5 +1,6 @@
 import { Field, InputType } from '@nestjs/graphql';
-import { IsEmail, IsNotEmpty, IsOptional, IsString, MaxLength } from 'class-validator';
+import { IsEmail, IsEnum, IsNotEmpty, IsOptional, IsString, MaxLength } from 'class-validator';
+import { UserRole } from 'src/user/entities/user-role.enum';
 
 @InputType()
 export class CreateUserInput {
@@ -17,8 +18,8 @@ export class CreateUserInput {
   email: string;
 
   @IsOptional()
-  @IsString()
+  @IsEnum(UserRole)
   @MaxLength(30)
-  @Field({description: 'Роль пользователя', nullable: true})
-  role?: string;
+  @Field(() => UserRole, {description: 'Роль пользователя', nullable: true})
+  role?: UserRole;
 }

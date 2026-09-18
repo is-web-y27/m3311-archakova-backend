@@ -5,19 +5,24 @@ import { UpdateArtistDto } from "./dto/update-artist.dto";
 import { PaginationQueryDto } from "src/common/dto/pagination-query.dto";
 import type { Response } from 'express';
 import { createPaginationLinks } from "src/common/pagination-links";
-import { ApiBadRequestResponse, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
+import { ApiBadRequestResponse, ApiCookieAuth, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
 import { ArtistResponseDto } from "./dto/artist-response.dto";
 import { PaginatedArtistsResponseDto } from "./dto/paginated-artists-response.dto";
 import { ArticleResponseDto } from "src/article/dto/article-response.dto";
 import { BadRequestResponseDto, NotFoundResponseDto } from "src/article/dto/error-response.dto";
+import { PublicAccess } from "src/infrastructure/auth/decorators/public-access.decorator";
+import { Roles } from "src/infrastructure/auth/decorators/roles.decorator";
+import { UserRole } from "src/user/entities/user-role.enum";
 
 @ApiTags('Artists')
 @UsePipes(new ValidationPipe({transform: true, whitelist: true, forbidNonWhitelisted: true}))
+@Roles(UserRole.ADMIN)
 @Controller('api/artists')
 export class ArtistApiController {
     constructor(private readonly artistService: ArtistService){}
 
     @Get()
+    @PublicAccess()
     @ApiOperation({summary: 'Получить страницу исполнителей'})
     @ApiOkResponse({description: 'Страница исполнителей получена', type: PaginatedArtistsResponseDto})
     @ApiBadRequestResponse({description: 'Некорректные параметры пагинации', type: BadRequestResponseDto})
@@ -35,6 +40,7 @@ export class ArtistApiController {
     }
 
     @Get(':id')
+    @PublicAccess()
     @ApiOperation({summary: 'Получить исполнителя по ID'})
     @ApiOkResponse({description: 'Исполнитель найден', type: ArtistResponseDto})
     @ApiBadRequestResponse({description: 'Некорректный ID', type: BadRequestResponseDto})
@@ -44,6 +50,7 @@ export class ArtistApiController {
     }
 
     @Get(':artistId/articles')
+    @PublicAccess()
     @ApiOperation({summary: 'Получить статьи исполнителя'})
     @ApiOkResponse({description: 'Статьи исполнителя получены', type: ArticleResponseDto, isArray: true})
     @ApiBadRequestResponse({description: 'Некорректный ID исполнителя', type: BadRequestResponseDto})
@@ -53,6 +60,7 @@ export class ArtistApiController {
     }
 
     @Get(':artistId/articles/:articleId')
+    @PublicAccess()
     @ApiOperation({summary: 'Получить статью исполнителя'})
     @ApiOkResponse({description: 'Статья исполнителя найдена', type: ArticleResponseDto})
     @ApiBadRequestResponse({description: 'Некорректный ID', type: BadRequestResponseDto})
@@ -62,6 +70,7 @@ export class ArtistApiController {
     }
 
     @Post()
+    @ApiCookieAuth('supertokens')
     @ApiOperation({summary: 'Создать исполнителя'})
     @ApiCreatedResponse({description: 'Исполнитель создан', type: ArtistResponseDto})
     @ApiBadRequestResponse({description: 'Некорректное тело запроса', type: BadRequestResponseDto})
@@ -71,6 +80,7 @@ export class ArtistApiController {
     }
 
     @Patch(':id')
+    @ApiCookieAuth('supertokens')
     @ApiOperation({summary: 'Обновить исполнителя'})
     @ApiOkResponse({description: 'Исполнитель обновлён', type: ArtistResponseDto})
     @ApiBadRequestResponse({description: 'Некорректный ID или тело запроса', type: BadRequestResponseDto})
@@ -80,6 +90,7 @@ export class ArtistApiController {
     }
 
     @Delete(':id')
+    @ApiCookieAuth('supertokens')
     @ApiOperation({summary: 'Удалить исполнителя'})
     @ApiOkResponse({description: 'Исполнитель удалён', type: ArtistResponseDto})
     @ApiBadRequestResponse({description: 'Некорректный ID', type: BadRequestResponseDto})

@@ -6,6 +6,9 @@ import { PaginatedLabelStatsType } from './paginated-label-stats.type';
 import { CreateLabelStatInput } from './dto/create-label-stat.input';
 import { UpdateLabelStatInput } from './dto/update-label-stat.input';
 import { MusicLabelTypeGraphql } from 'src/music-label/graphql/music-label.type';
+import { PublicAccess } from 'src/infrastructure/auth/decorators/public-access.decorator';
+import { Roles } from 'src/infrastructure/auth/decorators/roles.decorator';
+import { UserRole } from 'src/user/entities/user-role.enum';
 
 @UsePipes(new ValidationPipe({transform: true, whitelist: true, forbidNonWhitelisted: true}))
 @Resolver(() => LabelStatTypeGraphql)
@@ -13,11 +16,13 @@ export class LabelStatResolver {
     constructor(private readonly labelStatService: LabelStatService){}
 
     @Query(() => LabelStatTypeGraphql, {description: 'Запись статистики по Id'})
+    @PublicAccess()
     labelStat(@Args('id', {type: () => Int}) id: number){
         return this.labelStatService.findOne(id);
     }
 
     @Query(() => PaginatedLabelStatsType, {description: 'Статистика музыкальных лейблов с пагинацией'})
+    @PublicAccess()
     async labelStats(@Args('page', {type: () => Int, nullable: true}) page = 1, @Args('limit', {type: () => Int, nullable: true}) limit = 10){
         const {items, total} = await this.labelStatService.findPage(page, limit);
 
@@ -25,22 +30,26 @@ export class LabelStatResolver {
     }
 
     @Mutation(() => LabelStatTypeGraphql, {description: 'Создать запись статистики'})
+    @Roles(UserRole.ADMIN)
     createLabelStat(@Args('input') input: CreateLabelStatInput){
         return this.labelStatService.create(input);
     }
 
     @Mutation(() => LabelStatTypeGraphql, {description: 'Изменить запись статистики'})
+    @Roles(UserRole.ADMIN)
     updateLabelStat(@Args('input') input: UpdateLabelStatInput, @Args('id', {type: () => Int}) id: number){
         return this.labelStatService.update(id, input);
     }
 
     @Mutation(() => LabelStatTypeGraphql, {description: 'Удалить запись статистики'})
+    @Roles(UserRole.ADMIN)
     async removeLabelStat(@Args('id', {type: () => Int}) id: number){
         const labelStat = await this.labelStatService.remove(id);
         return {...labelStat, id};
     }
 
     @ResolveField(() => MusicLabelTypeGraphql, {description: 'Музыкальный лейбл'})
+    @PublicAccess()
     async label(@Parent() labelStat: LabelStatTypeGraphql){
         return labelStat.label ?? (await this.labelStatService.findOne(labelStat.id)).label;
     }

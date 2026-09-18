@@ -7,9 +7,19 @@ import hbs from 'hbs';
 import methodOverride from 'method-override';
 import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import SuperTokens from 'supertokens-node';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
+  app.enableCors({
+    origin: process.env.APP_WEBSITE_DOMAIN,
+    allowedHeaders: [
+      'content-type',
+      ...SuperTokens.getAllCORSHeaders(),
+    ],
+    credentials: true,
+  });
 
   app.use(methodOverride('_method'));
 
@@ -44,6 +54,11 @@ async function bootstrap() {
     .setTitle('Mononews API')
     .setDescription('REST api documentation for platform Mononews')
     .setVersion('1.0')
+    .addCookieAuth(
+      'sAccessToken',
+      { type: 'apiKey', in: 'cookie' },
+      'supertokens',
+    )
     .build();
 
   const swaggerDocument = SwaggerModule.createDocument(app, swaggerConfig);

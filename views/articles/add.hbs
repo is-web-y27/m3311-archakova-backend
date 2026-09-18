@@ -40,27 +40,31 @@
       </select>
     </div>
 
-    <div>
-      <label for="authorId">
-        Автор
-      </label>
+    {{#if isAdmin}}
+      <div>
+        <label for="authorId">
+          Автор
+        </label>
 
-      <select
-        id="authorId"
-        name="authorId"
-        required
-      >
-        <option value="" disabled selected>
-          Выберите автора
-        </option>
-
-        {{#each users}}
-          <option value="{{id}}">
-            {{name}} — {{email}}
+        <select
+          id="authorId"
+          name="authorId"
+          required
+        >
+          <option value="" disabled selected>
+            Выберите автора
           </option>
-        {{/each}}
-      </select>
-    </div>
+
+          {{#each users}}
+            <option value="{{id}}">
+              {{name}} — {{email}}
+            </option>
+          {{/each}}
+        </select>
+      </div>
+    {{else}}
+      <p><strong>Автор:</strong> {{currentUser.name}}</p>
+    {{/if}}
 
     <div>
       <label for="artistId">

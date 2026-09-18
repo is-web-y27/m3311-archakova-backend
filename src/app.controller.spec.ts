@@ -14,9 +14,13 @@ describe('AppController', () => {
     appController = app.get<AppController>(AppController);
   });
 
-  describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!');
+  describe('pages', () => {
+    it('should provide data for the about page', () => {
+      expect(appController.about()).toEqual({});
+    });
+
+    it('should provide data for the live feed page', () => {
+      expect(appController.apiPosts()).toEqual({});
     });
   });
 });

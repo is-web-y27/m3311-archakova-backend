@@ -9,6 +9,7 @@
     action="/feedback/{{feedback.id}}?_method=PATCH"
     method="POST"
   >
+    {{#if isAdmin}}
     <div>
       <label for="userId">
         Пользователь
@@ -29,6 +30,9 @@
         {{/each}}
       </select>
     </div>
+    {{else}}
+      <p><strong>Пользователь:</strong> {{feedback.user.name}}</p>
+    {{/if}}
 
     <div>
       <label for="message">

@@ -44,6 +44,7 @@
       </select>
     </div>
 
+    {{#if isAdmin}}
     <div>
       <label for="authorId">
         Автор
@@ -64,6 +65,9 @@
         {{/each}}
       </select>
     </div>
+    {{else}}
+      <p><strong>Автор:</strong> {{article.author.name}}</p>
+    {{/if}}
 
     <div>
       <label for="artistId">

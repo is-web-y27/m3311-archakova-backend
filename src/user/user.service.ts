@@ -1,9 +1,10 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
+import { UserRole } from './entities/user-role.enum';
 @Injectable()
 export class UserService {
   constructor(
@@ -97,5 +98,64 @@ export class UserService {
     const [items, total] = await this.userRepository.findAndCount({order: {id: 'ASC'}, skip: (page-1)*limit, take: limit});
 
     return { items, total};
+  }
+
+  async findByAuthProviderId(authProviderId: string): Promise<User | null> {
+    return this.userRepository.findOne({
+      where: { authProviderId },
+    });
+  }
+
+  async findByEmail(email: string): Promise<User | null> {
+    return this.userRepository.findOne({
+      where: { email },
+    });
+  }
+
+  async updateProfile(id: number, name: string): Promise<User> {
+    const user = await this.findOne(id);
+    user.name = name.trim();
+
+    return this.userRepository.save(user);
+  }
+
+  async linkOrCreateAuthUser(
+    authProviderId: string,
+    email: string,
+    name: string,
+    role = UserRole.USER,
+  ): Promise<User> {
+    const userByAuthId = await this.findByAuthProviderId(authProviderId);
+
+    if (userByAuthId) {
+      if (role === UserRole.ADMIN && userByAuthId.role !== UserRole.ADMIN) {
+        userByAuthId.role = UserRole.ADMIN;
+        return this.userRepository.save(userByAuthId);
+      }
+
+      return userByAuthId;
+    }
+
+    const userByEmail = await this.findByEmail(email);
+
+    if (userByEmail) {
+      if (userByEmail.authProviderId && userByEmail.authProviderId !== authProviderId) {
+        throw new ConflictException('User with this email is already linked to another authentication account');
+      }
+      userByEmail.authProviderId = authProviderId;
+      if (role === UserRole.ADMIN) {
+        userByEmail.role = UserRole.ADMIN;
+      }
+      return this.userRepository.save(userByEmail);
+    }
+
+    const user = this.userRepository.create({
+      name,
+      email,
+      role,
+      authProviderId,
+    });
+
+    return this.userRepository.save(user);
   }
 }

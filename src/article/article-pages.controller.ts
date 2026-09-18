@@ -1,7 +1,9 @@
 import { Controller, Get, Render } from '@nestjs/common';
 import { ArticleService } from './article.service';
 import { ArticleType } from './entities/article-type.enum';
+import { PublicAccess } from '../infrastructure/auth/decorators/public-access.decorator';
 
+@PublicAccess()
 @Controller()
 export class ArticlePagesController {
   constructor(

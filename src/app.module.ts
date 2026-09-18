@@ -18,11 +18,31 @@ import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin
 import { complexityPlugin } from './common/graphql/complexity.plugin';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { ElapsedTimeInterceptor } from './common/interceptors/elapsed-time.interceptor';
+import { AuthModule } from './infrastructure/auth/auth.module';
 
+function getRequiredEnv(name: string): string{
+  const value = process.env[name];
+  if (!value){
+    throw new Error(`There is no ${name}`);
+  }
+  return value;
+}
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+    }),
+
+    AuthModule.forRoot({
+      connectionURI: getRequiredEnv('SUPERTOKENS_CONNECTION_URI'),
+      apiKey: getRequiredEnv('SUPERTOKENS_API_KEY'),
+      appName: 'Mononews',
+      apiDomain: getRequiredEnv('APP_API_DOMAIN'),
+      websiteDomain: getRequiredEnv('APP_WEBSITE_DOMAIN'),
+      adminEmails: (process.env.AUTH_ADMIN_EMAILS ?? '')
+        .split(',')
+        .map((email) => email.trim().toLowerCase())
+        .filter(Boolean),
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,

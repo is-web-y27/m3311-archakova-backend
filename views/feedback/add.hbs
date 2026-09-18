@@ -9,27 +9,10 @@
     action="/feedback"
     method="POST"
   >
-    <div>
-      <label for="userId">
-        Пользователь
-      </label>
-
-      <select
-        id="userId"
-        name="userId"
-        required
-      >
-        <option value="" disabled selected>
-          Выберите пользователя
-        </option>
-
-        {{#each users}}
-          <option value="{{id}}">
-            {{name}} — {{email}}
-          </option>
-        {{/each}}
-      </select>
-    </div>
+    <p>
+      <strong>Пользователь:</strong>
+      {{user.name}}
+    </p>
 
     <div>
       <label for="message">
