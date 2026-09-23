@@ -2,7 +2,7 @@ import { ApolloServerPlugin } from '@apollo/server';
 import { GraphQLError } from 'graphql';
 import { fieldExtensionsEstimator, getComplexity, simpleEstimator } from 'graphql-query-complexity';
 
-const MAX_COMPLEXITY = 100;
+const MAX_COMPLEXITY = 300;
 
 export const complexityPlugin = (): ApolloServerPlugin => ({
   async requestDidStart() {
