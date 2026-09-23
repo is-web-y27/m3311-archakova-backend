@@ -27,6 +27,7 @@ import { complexityPlugin } from './common/graphql/complexity.plugin';
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       sortSchema: true,
       playground: false,
+      introspection: true,
       plugins: [ApolloServerPluginLandingPageLocalDefault(), complexityPlugin()],
     }),
     TypeOrmModule.forRootAsync({
