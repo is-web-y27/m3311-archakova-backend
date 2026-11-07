@@ -1,0 +1,31 @@
+{{#> layout title="Статистика лейблов"}}
+
+<section class="section">
+  <h1>Статистика лейблов</h1>
+
+  <a href="/label-stats/add">
+    Добавить статистику
+  </a>
+
+  {{#each labelStats}}
+    <div>
+      <a href="/label-stats/{{id}}">
+        {{label.name}} — {{year}}
+      </a>
+
+      <span>
+        — доход: {{revenue}}
+      </span>
+
+      {{#if marketShare}}
+        <span>
+          — доля рынка: {{marketShare}}%
+        </span>
+      {{/if}}
+    </div>
+  {{else}}
+    <p>Статистики пока нет.</p>
+  {{/each}}
+</section>
+
+{{/layout}}

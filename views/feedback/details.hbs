@@ -1,0 +1,49 @@
+{{#> layout title="Отзыв"}}
+
+<section class="section">
+  <h1 class="section__title">
+    Отзыв
+  </h1>
+
+  <p>
+    <strong>Пользователь:</strong>
+    {{feedback.user.name}}
+  </p>
+
+  <p>
+    <strong>Email:</strong>
+    {{feedback.user.email}}
+  </p>
+
+  <p>
+    <strong>Сообщение:</strong>
+  </p>
+
+  <p>
+    {{feedback.message}}
+  </p>
+
+  <p>
+    <strong>Оценка:</strong>
+    {{feedback.rating}} / 5
+  </p>
+
+  <a href="/feedback/{{feedback.id}}/edit">
+    Редактировать
+  </a>
+
+  <form
+    action="/feedback/{{feedback.id}}?_method=DELETE"
+    method="POST"
+  >
+    <button type="submit">
+      Удалить
+    </button>
+  </form>
+
+  <a href="/feedback">
+    Назад к отзывам
+  </a>
+</section>
+
+{{/layout}}

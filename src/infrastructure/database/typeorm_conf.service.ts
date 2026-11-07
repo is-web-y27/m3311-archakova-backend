@@ -3,12 +3,12 @@ import { ConfigService } from '@nestjs/config';
 import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
 import { parse } from 'pg-connection-string';
 
-import { User } from '../../src/user/entities/user.entity';
-import { Artist } from '../../src/artist/entities/artist.entity';
-import { MusicLabel } from '../../src/music-label/entities/music-label.entity';
-import { Article } from '../../src/article/entities/article.entity';
-import { Feedback } from '../../src/feedback/entities/feedback.entity';
-import { LabelStat } from '../../src/label-stat/entities/label-stat.entity';
+import { User } from '../../user/entities/user.entity';
+import { Artist } from '../../artist/entities/artist.entity';
+import { MusicLabel } from '../../music-label/entities/music-label.entity';
+import { Article } from '../../article/entities/article.entity';
+import { Feedback } from '../../feedback/entities/feedback.entity';
+import { LabelStat } from '../../label-stat/entities/label-stat.entity';
 
 @Injectable()
 export class TypeormConfService implements TypeOrmOptionsFactory {

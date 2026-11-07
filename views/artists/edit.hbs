@@ -1,0 +1,84 @@
+{{#> layout title="Редактировать артиста"}}
+
+<section class="section">
+  <h1>Редактировать артиста</h1>
+
+  <form
+    action="/artists/{{artist.id}}?_method=PATCH"
+    method="POST"
+  >
+    <div>
+      <label for="stageName">
+        Сценическое имя
+      </label>
+
+      <input
+        id="stageName"
+        name="stageName"
+        type="text"
+        value="{{artist.stageName}}"
+        required
+      >
+    </div>
+
+    <div>
+      <label for="genre">
+        Жанр
+      </label>
+
+      <input
+        id="genre"
+        name="genre"
+        type="text"
+        value="{{artist.genre}}"
+      >
+    </div>
+
+    <div>
+      <label for="country">
+        Страна
+      </label>
+
+      <input
+        id="country"
+        name="country"
+        type="text"
+        value="{{artist.country}}"
+      >
+    </div>
+
+    <div>
+      <label for="labelId">
+        Музыкальный лейбл
+      </label>
+
+      <select
+        id="labelId"
+        name="labelId"
+      >
+        <option value="">
+          Без лейбла
+        </option>
+
+        {{#each labelOptions}}
+          <option
+            value="{{id}}"
+            {{#if selected}}selected{{/if}}
+          >
+            {{name}}
+          </option>
+        {{/each}}
+      </select>
+    </div>
+
+    <button type="submit">
+      Сохранить
+    </button>
+  </form>
+
+  <a href="/artists/{{artist.id}}">
+    Отмена
+  </a>
+</section>
+
+{{/layout}}

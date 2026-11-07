@@ -1,26 +1,54 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-  <title>Концерты — Mononews</title>
+{{#> layout title="Анонсы концертов"}}
 
-  {{> head}}
-</head>
+<section id="events" class="section section--events">
+  <h2 class="section__title">
+    Анонсы концертов
+  </h2>
 
-<body>
-  {{> header}}
+  <div class="events-list">
+    {{#each articles}}
+      <article class="article">
 
-  <main class="main">
-    <aside id="events" class="aside">
-      <h2 class="section__title">Анонсы концертов</h2>
-      <ul>
-        <li><strong>ATL</strong> — 02.11</li>
-        <li><strong>MollyFest</strong> — 30.09</li>
-        <li><strong>плакса</strong> — 09.12</li>
-      </ul>
-    </aside>
-  </main>
+        <h3 class="article__title">
+          <a href="/articles/{{id}}">
+            {{title}}
+          </a>
+        </h3>
 
-  {{> footer}}
-  {{> scripts}}
-</body>
-</html>
+        {{#if summary}}
+          <p>
+            <strong>{{summary}}</strong>
+          </p>
+        {{/if}}
+
+        <p>
+          <strong>Автор:</strong>
+          {{author.name}}
+        </p>
+
+        {{#if artist}}
+          <p>
+            <strong>Артист:</strong>
+            {{artist.stageName}}
+          </p>
+        {{/if}}
+
+        {{#if publishedAt}}
+          <p>
+            <strong>Дата публикации:</strong>
+            {{formatDate publishedAt}}
+          </p>
+        {{/if}}
+
+        <div class="article__content">
+          <p>{{content}}</p>
+        </div>
+
+      </article>
+    {{else}}
+      <p>Анонсов концертов пока нет.</p>
+    {{/each}}
+  </div>
+</section>
+
+{{/layout}}

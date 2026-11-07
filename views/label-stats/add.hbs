@@ -1,0 +1,78 @@
+{{#> layout title="Добавить статистику"}}
+
+<section class="section">
+  <h1>Добавить статистику</h1>
+
+  <form
+    action="/label-stats"
+    method="POST"
+  >
+    <div>
+      <label for="labelId">
+        Музыкальный лейбл
+      </label>
+
+      <select
+        id="labelId"
+        name="labelId"
+        required
+      >
+        {{#each musicLabels}}
+          <option value="{{id}}">
+            {{name}}
+          </option>
+        {{/each}}
+      </select>
+    </div>
+
+    <div>
+      <label for="year">
+        Год
+      </label>
+
+      <input
+        id="year"
+        name="year"
+        type="number"
+        required
+      >
+    </div>
+
+    <div>
+      <label for="revenue">
+        Доход
+      </label>
+
+      <input
+        id="revenue"
+        name="revenue"
+        type="number"
+        step="0.01"
+        required
+      >
+    </div>
+
+    <div>
+      <label for="marketShare">
+        Доля рынка (%)
+      </label>
+
+      <input
+        id="marketShare"
+        name="marketShare"
+        type="number"
+        step="0.01"
+      >
+    </div>
+
+    <button type="submit">
+      Создать
+    </button>
+  </form>
+
+  <a href="/label-stats">
+    Назад к списку
+  </a>
+</section>
+
+{{/layout}}

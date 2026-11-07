@@ -1,0 +1,46 @@
+{{#> layout title="Статьи"}}
+
+<section class="section">
+  <h1 class="section__title">
+    Статьи
+  </h1>
+
+  <a href="/articles/add">
+    Добавить статью
+  </a>
+
+  {{#each articles}}
+    <article>
+      <h2>
+        <a href="/articles/{{id}}">
+          {{title}}
+        </a>
+      </h2>
+
+      <p>
+        <strong>Тип:</strong>
+        {{typeLabel}}
+      </p>
+
+      <p>
+        <strong>Автор:</strong>
+        {{author.name}}
+      </p>
+
+      {{#if artist}}
+        <p>
+          <strong>Артист:</strong>
+          {{artist.stageName}}
+        </p>
+      {{/if}}
+
+      {{#if summary}}
+        <p>{{summary}}</p>
+      {{/if}}
+    </article>
+  {{else}}
+    <p>Статей пока нет.</p>
+  {{/each}}
+</section>
+
+{{/layout}}

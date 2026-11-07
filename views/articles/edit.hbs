@@ -1,0 +1,125 @@
+{{#> layout title="Редактировать статью"}}
+
+<section class="section">
+  <h1 class="section__title">
+    Редактировать статью
+  </h1>
+
+  <form
+    action="/articles/{{article.id}}?_method=PATCH"
+    method="POST"
+  >
+    <div>
+      <label for="title">
+        Заголовок
+      </label>
+
+      <input
+        id="title"
+        name="title"
+        type="text"
+        value="{{article.title}}"
+        required
+      >
+    </div>
+
+    <div>
+      <label for="type">
+        Тип статьи
+      </label>
+
+      <select
+        id="type"
+        name="type"
+        required
+      >
+        {{#each typeOptions}}
+          <option
+            value="{{value}}"
+            {{#if selected}}selected{{/if}}
+          >
+            {{label}}
+          </option>
+        {{/each}}
+      </select>
+    </div>
+
+    <div>
+      <label for="authorId">
+        Автор
+      </label>
+
+      <select
+        id="authorId"
+        name="authorId"
+        required
+      >
+        {{#each userOptions}}
+          <option
+            value="{{id}}"
+            {{#if selected}}selected{{/if}}
+          >
+            {{name}}
+          </option>
+        {{/each}}
+      </select>
+    </div>
+
+    <div>
+      <label for="artistId">
+        Артист
+      </label>
+
+      <select
+        id="artistId"
+        name="artistId"
+      >
+        <option value="">
+          Без артиста
+        </option>
+
+        {{#each artistOptions}}
+          <option
+            value="{{id}}"
+            {{#if selected}}selected{{/if}}
+          >
+            {{stageName}}
+          </option>
+        {{/each}}
+      </select>
+    </div>
+
+    <div>
+      <label for="summary">
+        Краткое описание
+      </label>
+
+      <textarea
+        id="summary"
+        name="summary"
+      >{{article.summary}}</textarea>
+    </div>
+
+    <div>
+      <label for="content">
+        Текст статьи
+      </label>
+
+      <textarea
+        id="content"
+        name="content"
+        required
+      >{{article.content}}</textarea>
+    </div>
+
+    <button type="submit">
+      Сохранить
+    </button>
+  </form>
+
+  <a href="/articles/{{article.id}}">
+    Отмена
+  </a>
+</section>
+
+{{/layout}}

@@ -30,7 +30,7 @@ export class Artist {
     onDelete: 'SET NULL',
   })
   @JoinColumn({ name: 'label_id' })
-  label: MusicLabel;
+  label: MusicLabel | null;
 
   @OneToMany(() => Article, (article) => article.artist)
   articles: Article[];

@@ -1,0 +1,25 @@
+{{#> layout title="Музыкальные лейблы"}}
+
+<section class="section">
+  <h1>Музыкальные лейблы</h1>
+
+  <a href="/music-labels/add">
+    Добавить музыкальный лейбл
+  </a>
+
+  {{#each musicLabels}}
+    <div>
+      <a href="/music-labels/{{id}}">
+        {{name}}
+      </a>
+
+      {{#if country}}
+        <span> — {{country}}</span>
+      {{/if}}
+    </div>
+  {{else}}
+    <p>Музыкальных лейблов пока нет.</p>
+  {{/each}}
+</section>
+
+{{/layout}}

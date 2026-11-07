@@ -1,0 +1,78 @@
+{{#> layout title="Добавить артиста"}}
+
+<section class="section">
+  <h1>Добавить артиста</h1>
+
+  <form
+    action="/artists"
+    method="POST"
+  >
+    <div>
+      <label for="stageName">
+        Сценическое имя
+      </label>
+
+      <input
+        id="stageName"
+        name="stageName"
+        type="text"
+        required
+      >
+    </div>
+
+    <div>
+      <label for="genre">
+        Жанр
+      </label>
+
+      <input
+        id="genre"
+        name="genre"
+        type="text"
+      >
+    </div>
+
+    <div>
+      <label for="country">
+        Страна
+      </label>
+
+      <input
+        id="country"
+        name="country"
+        type="text"
+      >
+    </div>
+
+    <div>
+      <label for="labelId">
+        Музыкальный лейбл
+      </label>
+
+      <select
+        id="labelId"
+        name="labelId"
+      >
+        <option value="">
+          Без лейбла
+        </option>
+
+        {{#each musicLabels}}
+          <option value="{{id}}">
+            {{name}}
+          </option>
+        {{/each}}
+      </select>
+    </div>
+
+    <button type="submit">
+      Создать
+    </button>
+  </form>
+
+  <a href="/artists">
+    Назад к списку
+  </a>
+</section>
+
+{{/layout}}

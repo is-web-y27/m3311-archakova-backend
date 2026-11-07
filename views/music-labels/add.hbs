@@ -1,0 +1,50 @@
+{{#> layout title="Добавить музыкальный лейбл"}}
+
+<section class="section">
+  <h1>Добавить музыкальный лейбл</h1>
+
+  <form
+    action="/music-labels"
+    method="POST"
+  >
+    <div>
+      <label for="name">Название</label>
+
+      <input
+        id="name"
+        name="name"
+        type="text"
+        required
+      >
+    </div>
+
+    <div>
+      <label for="country">Страна</label>
+
+      <input
+        id="country"
+        name="country"
+        type="text"
+      >
+    </div>
+
+    <div>
+      <label for="description">Описание</label>
+
+      <textarea
+        id="description"
+        name="description"
+      ></textarea>
+    </div>
+
+    <button type="submit">
+      Создать
+    </button>
+  </form>
+
+  <a href="/music-labels">
+    Назад к списку
+  </a>
+</section>
+
+{{/layout}}

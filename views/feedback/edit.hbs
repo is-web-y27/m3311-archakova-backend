@@ -1,0 +1,72 @@
+{{#> layout title="Редактировать отзыв"}}
+
+<section class="section">
+  <h1 class="section__title">
+    Редактировать отзыв
+  </h1>
+
+  <form
+    action="/feedback/{{feedback.id}}?_method=PATCH"
+    method="POST"
+  >
+    <div>
+      <label for="userId">
+        Пользователь
+      </label>
+
+      <select
+        id="userId"
+        name="userId"
+        required
+      >
+        {{#each userOptions}}
+          <option
+            value="{{id}}"
+            {{#if selected}}selected{{/if}}
+          >
+            {{name}}
+          </option>
+        {{/each}}
+      </select>
+    </div>
+
+    <div>
+      <label for="message">
+        Сообщение
+      </label>
+
+      <textarea
+        id="message"
+        name="message"
+        minlength="10"
+        required
+      >{{feedback.message}}</textarea>
+    </div>
+
+    <div>
+      <label for="rating">
+        Оценка
+      </label>
+
+      <input
+        id="rating"
+        name="rating"
+        type="number"
+        min="1"
+        max="5"
+        value="{{feedback.rating}}"
+        required
+      >
+    </div>
+
+    <button type="submit">
+      Сохранить
+    </button>
+  </form>
+
+  <a href="/feedback/{{feedback.id}}">
+    Отмена
+  </a>
+</section>
+
+{{/layout}}

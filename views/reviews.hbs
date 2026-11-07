@@ -1,31 +1,54 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-  
-  <title>Обзоры — Mononews</title>
-  {{> head}}
+{{#> layout title="Обзоры"}}
 
-</head>
+<section id="reviews" class="section section--reviews">
+  <h2 class="section__title">
+    Обзоры
+  </h2>
 
-<body>
-  {{> header}}
+  <div class="reviews-list">
+    {{#each articles}}
+      <article class="article">
 
-  <main class="main">
-    <section id="reviews" class="section reviews">
-      <h2 class="section__title">Обзоры альбомов</h2>
-      <ol class="reviews__list">
-        <li>"Imago" — <em><del>старый звук</del></em>, <i>новое звучание</i></li>
-        <li>"КРАСНОСТЬ" — разговор артиста <ins>с самим собой</ins></li>
-      </ol>
-      <pre><code>
-// Пример кода для встраивания плейлиста
-const playlist = ['track1.mp3', 'track2.mp3'];
-playlist.forEach(track => play(track));
-      </code></pre>
-    </section>
-  </main>
+        <h3 class="article__title">
+          <a href="/articles/{{id}}">
+            {{title}}
+          </a>
+        </h3>
 
-  {{> footer}}
-  {{> scripts}}
-</body>
-</html>
+        {{#if summary}}
+          <p>
+            <strong>{{summary}}</strong>
+          </p>
+        {{/if}}
+
+        <p>
+          <strong>Автор:</strong>
+          {{author.name}}
+        </p>
+
+        {{#if artist}}
+          <p>
+            <strong>Артист:</strong>
+            {{artist.stageName}}
+          </p>
+        {{/if}}
+
+        {{#if publishedAt}}
+          <p>
+            <strong>Дата публикации:</strong>
+            {{formatDate publishedAt}}
+          </p>
+        {{/if}}
+
+        <div class="article__content">
+          <p>{{content}}</p>
+        </div>
+
+      </article>
+    {{else}}
+      <p>Обзоров пока нет.</p>
+    {{/each}}
+  </div>
+</section>
+
+{{/layout}}

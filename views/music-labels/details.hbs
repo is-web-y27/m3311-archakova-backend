@@ -1,0 +1,38 @@
+{{#> layout title=musicLabel.name}}
+
+<section class="section">
+  <h1>{{musicLabel.name}}</h1>
+
+  {{#if musicLabel.country}}
+    <p>
+      <strong>Страна:</strong>
+      {{musicLabel.country}}
+    </p>
+  {{/if}}
+
+  {{#if musicLabel.description}}
+    <p>
+      <strong>Описание:</strong>
+      {{musicLabel.description}}
+    </p>
+  {{/if}}
+
+  <a href="/music-labels/{{musicLabel.id}}/edit">
+    Редактировать
+  </a>
+
+  <form
+    action="/music-labels/{{musicLabel.id}}?_method=DELETE"
+    method="POST"
+  >
+    <button type="submit">
+      Удалить
+    </button>
+  </form>
+
+  <a href="/music-labels">
+    Назад к списку
+  </a>
+</section>
+
+{{/layout}}

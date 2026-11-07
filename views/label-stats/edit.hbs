@@ -1,0 +1,84 @@
+{{#> layout title="Редактировать статистику"}}
+
+<section class="section">
+  <h1>Редактировать статистику</h1>
+
+  <form
+    action="/label-stats/{{labelStat.id}}?_method=PATCH"
+    method="POST"
+  >
+    <div>
+      <label for="labelId">
+        Музыкальный лейбл
+      </label>
+
+      <select
+        id="labelId"
+        name="labelId"
+        required
+      >
+        {{#each labelOptions}}
+          <option
+            value="{{id}}"
+            {{#if selected}}selected{{/if}}
+          >
+            {{name}}
+          </option>
+        {{/each}}
+      </select>
+    </div>
+
+    <div>
+      <label for="year">
+        Год
+      </label>
+
+      <input
+        id="year"
+        name="year"
+        type="number"
+        value="{{labelStat.year}}"
+        required
+      >
+    </div>
+
+    <div>
+      <label for="revenue">
+        Доход
+      </label>
+
+      <input
+        id="revenue"
+        name="revenue"
+        type="number"
+        step="0.01"
+        value="{{labelStat.revenue}}"
+        required
+      >
+    </div>
+
+    <div>
+      <label for="marketShare">
+        Доля рынка (%)
+      </label>
+
+      <input
+        id="marketShare"
+        name="marketShare"
+        type="number"
+        step="0.01"
+        value="{{labelStat.marketShare}}"
+      >
+    </div>
+
+    <button type="submit">
+      Сохранить
+    </button>
+  </form>
+
+  <a href="/label-stats/{{labelStat.id}}">
+    Отмена
+  </a>
+</section>
+
+{{/layout}}

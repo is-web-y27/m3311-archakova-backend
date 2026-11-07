@@ -1,0 +1,29 @@
+{{#> layout title="Артисты"}}
+
+<section class="section">
+  <h1>Артисты</h1>
+
+  <a href="/artists/add">
+    Добавить артиста
+  </a>
+
+  {{#each artists}}
+    <div>
+      <a href="/artists/{{id}}">
+        {{stageName}}
+      </a>
+
+      {{#if genre}}
+        <span> — {{genre}}</span>
+      {{/if}}
+
+      {{#if label}}
+        <span> — {{label.name}}</span>
+      {{/if}}
+    </div>
+  {{else}}
+    <p>Артистов пока нет.</p>
+  {{/each}}
+</section>
+
+{{/layout}}
