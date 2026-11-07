@@ -119,4 +119,10 @@ export class ArticleService {
 
     return {items, total};
   }
+
+  async updateCover(id: number, coverUrl: string): Promise<Article> {
+    const article = await this.findOne(id);
+    article.coverUrl = coverUrl;
+    return this.articleRepository.save(article);
+  }
 }

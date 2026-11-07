@@ -16,6 +16,8 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 import { complexityPlugin } from './common/graphql/complexity.plugin';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { ElapsedTimeInterceptor } from './common/interceptors/elapsed-time.interceptor';
 
 @Module({
   imports: [
@@ -42,6 +44,6 @@ import { complexityPlugin } from './common/graphql/complexity.plugin';
     ArticleModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, { provide: APP_INTERCEPTOR, useClass: ElapsedTimeInterceptor}],
 })
 export class AppModule {}

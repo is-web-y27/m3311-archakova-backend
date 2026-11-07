@@ -16,6 +16,9 @@ export class Article {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column({ name: 'cover_url', type: 'varchar', length: 500, nullable: true })
+  coverUrl: string | null;
+  
   @Column({ length: 200 })
   title: string;
 

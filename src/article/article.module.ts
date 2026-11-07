@@ -9,9 +9,10 @@ import { ArticlePagesController } from './article-pages.controller';
 import { ArticleEventsController } from './article-events.controller';
 import { ArticleApiController } from './article-api.controller';
 import { ArticleResolver } from './graphql/article.resolver';
-
+import {CacheModule} from '@nestjs/cache-manager';
+import { StorageModule } from 'src/infrastructure/storage/storage.module';
 @Module({
-  imports: [TypeOrmModule.forFeature([Article]), UserModule, ArtistModule],
+  imports: [TypeOrmModule.forFeature([Article]), CacheModule.register({ttl: 5000}), UserModule, ArtistModule, StorageModule],
   controllers: [ArticleController, ArticlePagesController, ArticleEventsController, ArticleApiController],
   providers: [ArticleService, ArticleResolver],
   exports: [ArticleService]
