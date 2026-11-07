@@ -8,11 +8,12 @@ import { Article } from './entities/article.entity';
 import { ArticlePagesController } from './article-pages.controller';
 import { ArticleEventsController } from './article-events.controller';
 import { ArticleApiController } from './article-api.controller';
+import { ArticleResolver } from './graphql/article.resolver';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Article]), UserModule, ArtistModule],
   controllers: [ArticleController, ArticlePagesController, ArticleEventsController, ArticleApiController],
-  providers: [ArticleService],
+  providers: [ArticleService, ArticleResolver],
   exports: [ArticleService]
 })
 export class ArticleModule {}

@@ -11,11 +11,24 @@ import { ArtistModule } from './artist/artist.module';
 import { LabelStatModule } from './label-stat/label-stat.module';
 import { FeedbackModule } from './feedback/feedback.module';
 import { ArticleModule } from './article/article.module';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { join } from 'path';
+import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
+import { complexityPlugin } from './common/graphql/complexity.plugin';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+    }),
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      sortSchema: true,
+      playground: false,
+      introspection: true,
+      plugins: [ApolloServerPluginLandingPageLocalDefault(), complexityPlugin()],
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],

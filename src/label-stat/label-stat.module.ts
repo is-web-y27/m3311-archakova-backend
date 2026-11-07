@@ -6,10 +6,11 @@ import { MusicLabelModule } from 'src/music-label/music-label.module';
 import { LabelStat } from './entities/label-stat.entity';
 import { LabelStatPageController } from './label-stat-page.controller';
 import { LabelStatApiController } from './label-stat-api.controller';
+import { LabelStatResolver } from './graphql/label-stat.resolver';
 
 @Module({
   imports: [TypeOrmModule.forFeature([LabelStat]), MusicLabelModule],
   controllers: [LabelStatController, LabelStatPageController, LabelStatApiController],
-  providers: [LabelStatService],
+  providers: [LabelStatService, LabelStatResolver],
 })
 export class LabelStatModule {}
