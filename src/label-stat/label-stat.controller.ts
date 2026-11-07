@@ -4,7 +4,10 @@ import { CreateLabelStatDto } from './dto/create-label-stat.dto';
 import { UpdateLabelStatDto } from './dto/update-label-stat.dto';
 import type {Response} from 'express';
 import { MusicLabelService } from 'src/music-label/music-label.service';
+import { Roles } from 'src/infrastructure/auth/decorators/roles.decorator';
+import { UserRole } from 'src/user/entities/user-role.enum';
 
+@Roles(UserRole.ADMIN)
 @Controller('label-stats')
 export class LabelStatController {
   constructor(private readonly labelStatService: LabelStatService, private readonly musicLabelService: MusicLabelService) {}

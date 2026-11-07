@@ -18,6 +18,47 @@ body {
     line-height: 1.6;
 }
 
+.session {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+}
+
+.session p,
+.session form {
+    margin: 0;
+}
+
+.session a {
+    color: var(--color-light);
+}
+
+.session__role {
+    margin-left: 6px;
+    color: var(--color-cream);
+}
+
+.auth {
+    max-width: 680px;
+    margin: 0 auto;
+}
+
+.auth__form {
+    display: grid;
+    gap: 10px;
+    max-width: 420px;
+}
+
+.auth__form input {
+    padding: 9px 10px;
+    font: inherit;
+}
+
+.auth__error {
+    color: #a51d1d;
+}
+
 .header {
     background: linear-gradient(90deg, var(--color-text), #5f547e);
     color: var(--color-light);

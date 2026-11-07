@@ -3,7 +3,10 @@ import { MusicLabelService } from './music-label.service';
 import { CreateMusicLabelDto } from './dto/create-music-label.dto';
 import { UpdateMusicLabelDto } from './dto/update-music-label.dto';
 import type { Response } from 'express';
+import { Roles } from 'src/infrastructure/auth/decorators/roles.decorator';
+import { UserRole } from 'src/user/entities/user-role.enum';
 
+@Roles(UserRole.ADMIN)
 @Controller('music-labels')
 export class MusicLabelController {
   constructor(private readonly musicLabelService: MusicLabelService) {}

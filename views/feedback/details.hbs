@@ -28,18 +28,20 @@
     {{feedback.rating}} / 5
   </p>
 
-  <a href="/feedback/{{feedback.id}}/edit">
-    Редактировать
-  </a>
+  {{#if canManage}}
+    <a href="/feedback/{{feedback.id}}/edit">
+      Редактировать
+    </a>
 
-  <form
-    action="/feedback/{{feedback.id}}?_method=DELETE"
-    method="POST"
-  >
-    <button type="submit">
-      Удалить
-    </button>
-  </form>
+    <form
+      action="/feedback/{{feedback.id}}?_method=DELETE"
+      method="POST"
+    >
+      <button type="submit">
+        Удалить
+      </button>
+    </form>
+  {{/if}}
 
   <a href="/feedback">
     Назад к отзывам

@@ -1,0 +1,17 @@
+{{#> layout title="Профиль"}}
+
+<section class="section auth">
+  <h1 class="section__title">Профиль</h1>
+
+  <p><strong>Электронная почта:</strong> {{profile.email}}</p>
+  <p><strong>Роль:</strong> {{profile.role}}</p>
+
+  <form class="auth__form" action="/profile?_method=PATCH" method="POST">
+    <label for="name">Имя</label>
+    <input id="name" name="name" type="text" minlength="2" maxlength="100" value="{{profile.name}}" required>
+
+    <button type="submit">Сохранить</button>
+  </form>
+</section>
+
+{{/layout}}

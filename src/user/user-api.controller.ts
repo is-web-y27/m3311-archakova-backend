@@ -5,15 +5,19 @@ import { UpdateUserDto } from "./dto/update-user.dto";
 import { PaginationQueryDto } from "src/common/dto/pagination-query.dto";
 import { createPaginationLinks } from "src/common/pagination-links";
 import type {Response } from "express";
-import { ApiBadRequestResponse, ApiConflictResponse, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
+import { ApiBadRequestResponse, ApiConflictResponse, ApiCookieAuth, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
 import { UserResponseDto } from "./dto/user-response.dto";
 import { PaginatedUsersResponseDto } from "./dto/paginated-users-response.dto";
 import { ArticleResponseDto } from "src/article/dto/article-response.dto";
 import { FeedbackResponseDto } from "src/feedback/dto/feedback-response.dto";
 import { BadRequestResponseDto, ConflictResponseDto, NotFoundResponseDto } from "src/article/dto/error-response.dto";
+import { Roles } from "src/infrastructure/auth/decorators/roles.decorator";
+import { UserRole } from "./entities/user-role.enum";
 
 @ApiTags('Users')
+@ApiCookieAuth('supertokens')
 @UsePipes(new ValidationPipe({transform: true, whitelist: true, forbidNonWhitelisted: true}))
+@Roles(UserRole.ADMIN)
 @Controller('api/users')
 export class UserApiController{
     constructor(private readonly userService: UserService){}

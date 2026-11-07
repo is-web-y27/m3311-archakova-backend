@@ -10,6 +10,10 @@ export class AllExceptionsFilter extends BaseExceptionFilter {
   }
 
   catch(exception: unknown, host: ArgumentsHost) {
+    if (host.getType<string>() === 'graphql') {
+      throw exception;
+    }
+
     const context = host.switchToHttp();
     const request = context.getRequest<Request>();
     const response = context.getResponse<Response>();

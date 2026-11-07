@@ -1,6 +1,7 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { ArticleTypeGraphql } from 'src/article/graphql/article.type';
 import { FeedbackTypeGraphql } from 'src/feedback/graphql/feedback.type';
+import { UserRole } from './user-role.enum';
 
 @ObjectType('User')
 export class UserTypeGraphql {
@@ -13,8 +14,8 @@ export class UserTypeGraphql {
   @Field({description: 'Почта пользователя'})
   email: string;
 
-  @Field({description: 'Роль пользователя'})
-  role: string;
+  @Field(() => UserRole, {description: 'Роль пользователя'})
+  role: UserRole;
 
   @Field(() => [ArticleTypeGraphql], {description: 'Статьи пользователя'})
   articles: ArticleTypeGraphql[];

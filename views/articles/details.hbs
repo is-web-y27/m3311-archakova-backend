@@ -70,6 +70,7 @@
     </p>
   {{/if}}
 
+  {{#if canManage}}
   <div class="article-actions">
     <a href="/articles/{{article.id}}/edit">
       Редактировать
@@ -84,6 +85,7 @@
       </button>
     </form>
   </div>
+  {{/if}}
 
   <div class="article-navigation">
     <a href="{{backUrl}}">

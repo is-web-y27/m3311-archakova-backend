@@ -7,5 +7,14 @@
     <li><a href="/about" class="nav__link">О нас</a></li>
     <li><a href="/feedback" class="nav__link">Обратная связь</a></li>
     <li><a href="/api-posts" class="nav__link">Живая лента</a></li>
+    {{#if user}}
+      <li><a href="/articles" class="nav__link">Мои статьи</a></li>
+    {{/if}}
+    {{#if user.isAdmin}}
+      <li><a href="/artists" class="nav__link">Артисты</a></li>
+      <li><a href="/music-labels" class="nav__link">Лейблы</a></li>
+      <li><a href="/label-stats" class="nav__link">Управление статистикой</a></li>
+      <li><a href="/users" class="nav__link">Пользователи</a></li>
+    {{/if}}
   </ul>
 </nav>

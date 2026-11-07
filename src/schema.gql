@@ -145,7 +145,7 @@ input CreateUserInput {
   name: String!
 
   """Роль пользователя"""
-  role: String
+  role: UserRole
 }
 
 """
@@ -490,7 +490,7 @@ input UpdateUserInput {
   name: String
 
   """Роль пользователя"""
-  role: String
+  role: UserRole
 }
 
 type User {
@@ -513,8 +513,14 @@ type User {
   name: String!
 
   """Роль пользователя"""
-  role: String!
+  role: UserRole!
 
   """Дата обновления пользователя"""
   updatedAt: DateTime!
+}
+
+"""Роль пользователя в системе"""
+enum UserRole {
+  ADMIN
+  USER
 }

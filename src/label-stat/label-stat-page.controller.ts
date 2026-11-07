@@ -1,6 +1,8 @@
 import {Controller,Get,Render} from '@nestjs/common';
 import { LabelStatService } from './label-stat.service';
+import { PublicAccess } from '../infrastructure/auth/decorators/public-access.decorator';
 
+@PublicAccess()
 @Controller()
 export class LabelStatPageController {
     constructor(private readonly labelStatService: LabelStatService) {}
